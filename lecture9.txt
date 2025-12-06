@@ -1,0 +1,428 @@
+			Relationship and Joins
+====================================================================
+
+1. One to One (1:1) : 
+	
+Citizens					Aadhar
+Cid	Name	Address			Cid	Aadhar
+1	A	Sagar			1	93848
+2	B	Indore			2	787373
+
+2. One to many (1:N) 
+
+Teacher_Master				Enrollment
+Tcd	Name	Quali			Admo		Tcd
+1	A	Phd			901		1
+					902		1
+
+Course_Master				Student_Master
+Cid	Name	Duration			Rollno	Cid
+1	C++	2			101	1
+2	Java	3			102	1
+					103	1
+					104	2
+					
+3. Many to Many (M:N)
+
+Products					Customers
+Pno	Name	Company			Cno	Name	Pno
+1	Printer	Samsung			101	A	1
+2	KB	Lg			101	A	2
+					102	B	1
+
+	
+		Book
+	Bookcd		Name		Publisher
+	1		C		PBP
+
+		Member
+	Memcd		Name		Address
+	101		A		Sagar
+
+		Issue
+	Memcd		Bcd	DOI	DOR
+	101		1	--	---
+	101		2
+	102		1			
+
+
+
+JOINS:
+
+1. Inner Join 	
+			
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Thu Nov 20 08:19:31 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: price
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+
+31 rows selected.
+
+SQL> select * from parent;
+
+      SRNO NAME
+---------- ----------
+         1 A
+         2 B
+
+SQL> select * from child;
+
+no rows selected
+
+SQL> desc child;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SNO                                                NUMBER
+ ADDRESS                                            VARCHAR2(10)
+
+SQL> create table stock(prodcd number(3) primary key, name varchar(10),
+  2  company varchar(10));
+
+Table created.
+
+SQL> insert into stock values(101,'Monitor','HP');
+
+1 row created.
+
+SQL> create table sales
+  2  (pno number(3) references stock, cname varchar(10));
+
+Table created.
+
+SQL> insert into sales values(9,'A');
+insert into sales values(9,'A')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (PRINCE.SYS_C004635) violated - parent key not
+found
+
+
+SQL> insert into sales values(1,'A');
+insert into sales values(1,'A')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (PRINCE.SYS_C004635) violated - parent key not
+found
+
+
+SQL> insert into sales values(101,'A');
+
+1 row created.
+
+SQL> select * from stock;
+
+    PRODCD NAME       COMPANY
+---------- ---------- ----------
+       101 Monitor    HP
+
+SQL> select * from sales;
+
+       PNO CNAME
+---------- ----------
+       101 A
+
+SQL> insert into stock values(102,'Printer','Canon');
+
+1 row created.
+
+SQL> insert into stock values(103,'Mouse','Logitech');
+
+1 row created.
+
+SQL> select * from stock;
+
+    PRODCD NAME       COMPANY
+---------- ---------- ----------
+       101 Monitor    HP
+       102 Printer    Canon
+       103 Mouse      Logitech
+
+SQL> insert into sales values(101,'B');
+
+1 row created.
+
+SQL> insert into sales values(102,'C');
+
+1 row created.
+
+SQL> select * from stock;
+
+    PRODCD NAME       COMPANY
+---------- ---------- ----------
+       101 Monitor    HP
+       102 Printer    Canon
+       103 Mouse      Logitech
+
+SQL> select * from sales;
+
+       PNO CNAME
+---------- ----------
+       101 A
+       101 B
+       102 C
+
+SQL> select prodcd,name,company,cname
+  2  from stock,sales
+  3  where
+  4  prodcd=pno;
+
+    PRODCD NAME       COMPANY    CNAME
+---------- ---------- ---------- ----------
+       101 Monitor    HP         A
+       101 Monitor    HP         B
+       102 Printer    Canon      C
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+STOCK                          TABLE
+SALES                          TABLE
+
+33 rows selected.
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from reservation;
+
+     PNRNO NAME       DOJ          TRAINNO
+---------- ---------- --------- ----------
+       945 Ravi       11-NOV-25       1002
+
+SQL> insert into reservation values(944,'Kavi',sysdate,1002);
+
+1 row created.
+
+SQL> insert into reservation values(958,'Chhavi',sysdate,1001);
+
+1 row created.
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from reservation;
+
+     PNRNO NAME       DOJ          TRAINNO
+---------- ---------- --------- ----------
+       945 Ravi       11-NOV-25       1002
+       944 Kavi       20-NOV-25       1002
+       958 Chhavi     20-NOV-25       1001
+
+SQL> select tno,name,source,destination,pnrno,name,doj
+  2  from trains,reservation
+  3  where
+  4  tno=trainno;
+select tno,name,source,destination,pnrno,name,doj
+                                         *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+SQL> select tno,trains.name,source,destination,pnrno,reservation.name,doj
+  2  from trains,reservation
+  3  where
+  4  tno=trainno;
+
+       TNO NAME       SOURCE     DESTINATIO      PNRNO NAME       DOJ
+---------- ---------- ---------- ---------- ---------- ---------- ---------
+      1002 B Exp.     Delhi      Hyderabad         945 Ravi       11-NOV-25
+      1002 B Exp.     Delhi      Hyderabad         944 Kavi       20-NOV-25
+      1001 A Exp.     Delhi      Mumbai            958 Chhavi     20-NOV-25
+
+SQL> select tno,t.name,source,destination,pnrno,r.name,doj
+  2  from trains t,reservation r
+  3  where
+  4  tno=trainno;
+
+       TNO NAME       SOURCE     DESTINATIO      PNRNO NAME       DOJ
+---------- ---------- ---------- ---------- ---------- ---------- ---------
+      1002 B Exp.     Delhi      Hyderabad         945 Ravi       11-NOV-25
+      1002 B Exp.     Delhi      Hyderabad         944 Kavi       20-NOV-25
+      1001 A Exp.     Delhi      Mumbai            958 Chhavi     20-NOV-25
+
+SQL> select tno,trains.name,source,destination,pnrno,reservation.name,doj
+  2  from trains
+  3  inner join reservation on tno=trainno;
+
+       TNO NAME       SOURCE     DESTINATIO      PNRNO NAME       DOJ
+---------- ---------- ---------- ---------- ---------- ---------- ---------
+      1002 B Exp.     Delhi      Hyderabad         945 Ravi       11-NOV-25
+      1002 B Exp.     Delhi      Hyderabad         944 Kavi       20-NOV-25
+      1001 A Exp.     Delhi      Mumbai            958 Chhavi     20-NOV-25
+
+SQL> select * from books;
+
+    BOOKNO NAME          EDITION
+---------- ---------- ----------
+         1 SQL              2023
+         2 Java             2024
+
+SQL> select * from members;
+
+     MEMCD NAME          CONTACT
+---------- ---------- ----------
+       901 Rajesh           9585
+       902 Amit             9285
+
+SQL> select * from issue;
+
+no rows selected
+
+SQL> desc issue;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ISSUECD                                   NOT NULL NUMBER
+ BCD                                                NUMBER
+ MCD                                                NUMBER
+ DOI                                                DATE
+ DOR                                                DATE
+
+SQL> insert into issue values(501,1,901,sysdate,sydate+2);
+insert into issue values(501,1,901,sysdate,sydate+2)
+                                           *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into issue values(501,1,901,sysdate,sysdate+2);
+
+1 row created.
+
+SQL> select * from issue;
+
+   ISSUECD        BCD        MCD DOI       DOR
+---------- ---------- ---------- --------- ---------
+       501          1        901 20-NOV-25 22-NOV-25
+
+SQL> select bookno,b.name,edition,memcd,m.name,contact,doi,dor
+  2  from books b, members m,issue
+  3  where
+  4  issue.bcd=b.bookno
+  5  and
+  6  issue.mcd=m.memcd;
+
+    BOOKNO NAME          EDITION      MEMCD NAME          CONTACT DOI
+---------- ---------- ---------- ---------- ---------- ---------- ---------
+DOR
+---------
+         1 SQL              2023        901 Rajesh           9585 20-NOV-25
+22-NOV-25
+
+
+SQL> select bookno,b.name,edition,memcd,m.name,contact,doi,dor
+  2  from books b
+  3  inner join issue on bcd=bookno
+  4  inner join members m on mcd=m.memcd;
+
+    BOOKNO NAME          EDITION      MEMCD NAME          CONTACT DOI
+---------- ---------- ---------- ---------- ---------- ---------- ---------
+DOR
+---------
+         1 SQL              2023        901 Rajesh           9585 20-NOV-25
+22-NOV-25
+
+
+SQL>

@@ -1,0 +1,1118 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Nov 15 08:18:51 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+
+30 rows selected.
+
+SQL> select * from emp;
+
+no rows selected
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+
+SQL> select * from emp2;
+
+     EMPNO     SALARY
+---------- ----------
+       101       2000
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+
+30 rows selected.
+
+SQL> select * from emps;
+
+     EMPNO DOB       DOJ
+---------- --------- ---------
+         1 10-JAN-00 10-JAN-09
+
+SQL> select * from sample;
+
+FNAME      LNAME
+---------- ----------
+Amit       Kumar
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+
+30 rows selected.
+
+SQL> select * from employees;
+
+no rows selected
+
+SQL> select * from customer;
+select * from customer
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT
+---------- ------------ ---------- --------- ----------
+         1 Ravi                495 10-APR-20       9983
+         2 Sumit               715 13-APR-20       8832
+         3 Ajay                165 30-SEP-22
+         4 Vijay               935 15-FEB-23
+         5 Sanjay              385 10-APR-20
+         6 Gourav               55 03-NOV-25
+         7 Sourav              120 06-NOV-25
+         8 Raja                230 04-OCT-25
+         9 Rani                260 16-MAY-23
+
+9 rows selected.
+
+SQL> select sum(amount) from customers;
+
+SUM(AMOUNT)
+-----------
+       3360
+
+SQL> select sum(amount)Total from customers;
+
+     TOTAL
+----------
+      3360
+
+SQL> select sum(avg) from customers;
+select sum(avg) from customers
+           *
+ERROR at line 1:
+ORA-00904: "AVG": invalid identifier
+
+
+SQL> select avg(amount) from customers;
+
+AVG(AMOUNT)
+-----------
+ 373.333333
+
+SQL> select avg(amount)average from customers;
+
+   AVERAGE
+----------
+373.333333
+
+SQL> select min(amount) from customers;
+
+MIN(AMOUNT)
+-----------
+         55
+
+SQL> select max(amount) from customers;
+
+MAX(AMOUNT)
+-----------
+        935
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT
+---------- ------------ ---------- --------- ----------
+         1 Ravi                495 10-APR-20       9983
+         2 Sumit               715 13-APR-20       8832
+         3 Ajay                165 30-SEP-22
+         4 Vijay               935 15-FEB-23
+         5 Sanjay              385 10-APR-20
+         6 Gourav               55 03-NOV-25
+         7 Sourav              120 06-NOV-25
+         8 Raja                230 04-OCT-25
+         9 Rani                260 16-MAY-23
+
+9 rows selected.
+
+SQL> select count(*) from customers;
+
+  COUNT(*)
+----------
+         9
+
+SQL> select count(contact) from customers;
+
+COUNT(CONTACT)
+--------------
+             2
+
+SQL> select count(cname)from customers;
+
+COUNT(CNAME)
+------------
+           9
+
+SQL> select count(contact)from customers;
+
+COUNT(CONTACT)
+--------------
+             2
+
+SQL> select cname,sum(amount) from customers;
+select cname,sum(amount) from customers
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select sum(amount),max(doj),min(cname) from customers;
+
+SUM(AMOUNT) MAX(DOJ)  MIN(CNAME)
+----------- --------- ------------
+       3360 06-NOV-25 Ajay
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+
+30 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT
+---------- ------------ ---------- --------- ----------
+         1 Ravi                495 10-APR-20       9983
+         2 Sumit               715 13-APR-20       8832
+         3 Ajay                165 30-SEP-22
+         4 Vijay               935 15-FEB-23
+         5 Sanjay              385 10-APR-20
+         6 Gourav               55 03-NOV-25
+         7 Sourav              120 06-NOV-25
+         8 Raja                230 04-OCT-25
+         9 Rani                260 16-MAY-23
+
+9 rows selected.
+
+SQL> alter table customers add(dept number);
+
+Table altered.
+
+SQL> update customers set dept=10 where cno in(1,3,5,7);
+
+4 rows updated.
+
+SQL> update customers set dept=20 where cno in(2,4,6,8);
+
+4 rows updated.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT
+---------- ------------ ---------- --------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10
+         2 Sumit               715 13-APR-20       8832         20
+         3 Ajay                165 30-SEP-22                    10
+         4 Vijay               935 15-FEB-23                    20
+         5 Sanjay              385 10-APR-20                    10
+         6 Gourav               55 03-NOV-25                    20
+         7 Sourav              120 06-NOV-25                    10
+         8 Raja                230 04-OCT-25                    20
+         9 Rani                260 16-MAY-23
+
+9 rows selected.
+
+SQL> update customers set dept=30 where cno=9 or cno=4;
+
+2 rows updated.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT
+---------- ------------ ---------- --------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10
+         2 Sumit               715 13-APR-20       8832         20
+         3 Ajay                165 30-SEP-22                    10
+         4 Vijay               935 15-FEB-23                    30
+         5 Sanjay              385 10-APR-20                    10
+         6 Gourav               55 03-NOV-25                    20
+         7 Sourav              120 06-NOV-25                    10
+         8 Raja                230 04-OCT-25                    20
+         9 Rani                260 16-MAY-23                    30
+
+9 rows selected.
+
+SQL> select sum(amount),dept from customers;
+select sum(amount),dept from customers
+                   *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select sum(amount),dept from customers group by dept;
+
+SUM(AMOUNT)       DEPT
+----------- ----------
+       1195         30
+       1000         20
+       1165         10
+
+SQL> select dept,count(*) from customers;
+select dept,count(*) from customers
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select dept,count(*) from customers group by dept;
+
+      DEPT   COUNT(*)
+---------- ----------
+        30          2
+        20          3
+        10          4
+
+SQL> select dept,count(*),sum(amount) from customers group by dept;
+
+      DEPT   COUNT(*) SUM(AMOUNT)
+---------- ---------- -----------
+        30          2        1195
+        20          3        1000
+        10          4        1165
+
+SQL> select dept,count(*),sum(amount) from customers group by dept where dept=10;
+select dept,count(*),sum(amount) from customers group by dept where dept=10
+                                                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select dept,count(*),sum(amount) from customers where dept=10 group by dept ;
+
+      DEPT   COUNT(*) SUM(AMOUNT)
+---------- ---------- -----------
+        10          4        1165
+
+SQL> select dept,count(*),sum(amount) from customers group by dept  having dept=10;
+
+      DEPT   COUNT(*) SUM(AMOUNT)
+---------- ---------- -----------
+        10          4        1165
+
+SQL> alter table customers add city varchar(10);
+
+Table altered.
+
+SQL> update customers set city='Sagar' where cno in(2,3,6,7);
+
+4 rows updated.
+
+SQL>
+SQL>
+SQL> update customers set city='Indore' where cno in(1,4,5);
+
+3 rows updated.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20
+         9 Rani                260 16-MAY-23                    30
+
+9 rows selected.
+
+SQL> update customers set city='Bhopal' where city is null;
+
+2 rows updated.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> select count(*),dept,city group by dept;
+select count(*),dept,city group by dept
+                          *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select count(*),dept,city from customers group by dept;
+select count(*),dept,city from customers group by dept
+                     *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select count(*),dept,city from customers group by dept,city;
+
+  COUNT(*)       DEPT CITY
+---------- ---------- ----------
+         1         30 Indore
+         2         10 Sagar
+         1         20 Bhopal
+         1         30 Bhopal
+         2         10 Indore
+         2         20 Sagar
+
+6 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> select count(*),dept,city from customers group by city,dept;
+
+  COUNT(*)       DEPT CITY
+---------- ---------- ----------
+         1         30 Indore
+         2         10 Sagar
+         2         10 Indore
+         2         20 Sagar
+         1         30 Bhopal
+         1         20 Bhopal
+
+6 rows selected.
+
+SQL> select count(*),dept,city from customers group by city,dept
+  2  having city='Sagar' or city='Indore';
+
+  COUNT(*)       DEPT CITY
+---------- ---------- ----------
+         1         30 Indore
+         2         10 Sagar
+         2         10 Indore
+         2         20 Sagar
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select dept,min(doj) from customers group by dept;
+
+      DEPT MIN(DOJ)
+---------- ---------
+        30 15-FEB-23
+        20 13-APR-20
+        10 10-APR-20
+
+SQL> select dept,cname,min(doj) from customers group by dept,cname;
+
+      DEPT CNAME        MIN(DOJ)
+---------- ------------ ---------
+        10 Ravi         10-APR-20
+        30 Vijay        15-FEB-23
+        10 Sourav       06-NOV-25
+        30 Rani         16-MAY-23
+        10 Ajay         30-SEP-22
+        20 Gourav       03-NOV-25
+        20 Raja         04-OCT-25
+        20 Sumit        13-APR-20
+        10 Sanjay       10-APR-20
+
+9 rows selected.
+
+SQL> select dept,cname,min(doj) from customers group by dept;
+select dept,cname,min(doj) from customers group by dept
+            *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> select len(cname) from customers;
+select len(cname) from customers
+       *
+ERROR at line 1:
+ORA-00904: "LEN": invalid identifier
+
+
+SQL> select length(cname) from customers;
+
+LENGTH(CNAME)
+-------------
+            4
+            5
+            4
+            5
+            6
+            6
+            6
+            4
+            4
+
+9 rows selected.
+
+SQL> select cname,length(cname) from customers;
+
+CNAME        LENGTH(CNAME)
+------------ -------------
+Ravi                     4
+Sumit                    5
+Ajay                     4
+Vijay                    5
+Sanjay                   6
+Gourav                   6
+Sourav                   6
+Raja                     4
+Rani                     4
+
+9 rows selected.
+
+SQL> select length('welcome');
+select length('welcome')
+                       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select length('welcome') from customers;
+
+LENGTH('WELCOME')
+-----------------
+                7
+                7
+                7
+                7
+                7
+                7
+                7
+                7
+                7
+
+9 rows selected.
+
+SQL> select length('welcome') from emps;
+
+LENGTH('WELCOME')
+-----------------
+                7
+
+SQL> select length('welcome') from dual;
+
+LENGTH('WELCOME')
+-----------------
+                7
+
+SQL> desc dual;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DUMMY                                              VARCHAR2(1)
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+
+30 rows selected.
+
+SQL> select length('welcome') from dual;
+
+LENGTH('WELCOME')
+-----------------
+                7
+
+SQL> select * from dual;
+
+D
+-
+X
+
+SQL>
+SQL> select sum(10,20,30)from dual;
+select sum(10,20,30)from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select 10+20+30 from dual;
+
+  10+20+30
+----------
+        60
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> select cname,instr(cname,'y') from customers;
+
+CNAME        INSTR(CNAME,'Y')
+------------ ----------------
+Ravi                        0
+Sumit                       0
+Ajay                        4
+Vijay                       5
+Sanjay                      6
+Gourav                      0
+Sourav                      0
+Raja                        0
+Rani                        0
+
+9 rows selected.
+
+SQL> select cname,instr(cname,'R') from customers;
+
+CNAME        INSTR(CNAME,'R')
+------------ ----------------
+Ravi                        1
+Sumit                       0
+Ajay                        0
+Vijay                       0
+Sanjay                      0
+Gourav                      0
+Sourav                      0
+Raja                        1
+Rani                        1
+
+9 rows selected.
+
+SQL> select cname,instr(cname,'r') from customers;
+
+CNAME        INSTR(CNAME,'R')
+------------ ----------------
+Ravi                        0
+Sumit                       0
+Ajay                        0
+Vijay                       0
+Sanjay                      0
+Gourav                      4
+Sourav                      4
+Raja                        0
+Rani                        0
+
+9 rows selected.
+
+SQL> select lower(cname) from customers;
+
+LOWER(CNAME)
+------------
+ravi
+sumit
+ajay
+vijay
+sanjay
+gourav
+sourav
+raja
+rani
+
+9 rows selected.
+
+SQL> select upper(cname) from customers;
+
+UPPER(CNAME)
+------------
+RAVI
+SUMIT
+AJAY
+VIJAY
+SANJAY
+GOURAV
+SOURAV
+RAJA
+RANI
+
+9 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> update customers set cname=upper(cname) ;
+
+9 rows updated.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 RAVI                495 10-APR-20       9983         10 Indore
+         2 SUMIT               715 13-APR-20       8832         20 Sagar
+         3 AJAY                165 30-SEP-22                    10 Sagar
+         4 VIJAY               935 15-FEB-23                    30 Indore
+         5 SANJAY              385 10-APR-20                    10 Indore
+         6 GOURAV               55 03-NOV-25                    20 Sagar
+         7 SOURAV              120 06-NOV-25                    10 Sagar
+         8 RAJA                230 04-OCT-25                    20 Bhopal
+         9 RANI                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> update customers set cname=initcap(cname) ;
+
+9 rows updated.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> select lower('A@GMAIL.COM') from dual;
+
+LOWER('A@GM
+-----------
+a@gmail.com
+
+SQL> update customers set name='Raja ' where cno=8;
+update customers set name='Raja ' where cno=8
+                     *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier
+
+
+SQL> update customers set cname='Raja ' where cno=8;
+
+1 row updated.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> select * from customers where cname='Raja';
+
+no rows selected
+
+SQL> select trim('  India  ') from dual;
+
+TRIM(
+-----
+India
+
+SQL> select cname,length(cname) from customers;
+
+CNAME        LENGTH(CNAME)
+------------ -------------
+Ravi                     4
+Sumit                    5
+Ajay                     4
+Vijay                    5
+Sanjay                   6
+Gourav                   6
+Sourav                   6
+Raja                     5
+Rani                     4
+
+9 rows selected.
+
+SQL> update customers set cname=trim(cname) ;
+
+9 rows updated.
+
+SQL> select cname,length(cname) from customers;
+
+CNAME        LENGTH(CNAME)
+------------ -------------
+Ravi                     4
+Sumit                    5
+Ajay                     4
+Vijay                    5
+Sanjay                   6
+Gourav                   6
+Sourav                   6
+Raja                     4
+Rani                     4
+
+9 rows selected.
+
+SQL> select ltrim('  India  ') from dual;
+
+LTRIM('
+-------
+India
+
+SQL> select rtrim('  India  ') from dual;
+
+RTRIM('
+-------
+  India
+
+SQL> select length(rtrim('  India  ')) from dual;
+
+LENGTH(RTRIM('INDIA'))
+----------------------
+                     7
+
+SQL> select length(trim('  India  ')) from dual;
+
+LENGTH(TRIM('INDIA'))
+---------------------
+                    5
+
+SQL> select * from custoomers;
+select * from custoomers
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+
+9 rows selected.
+
+SQL> insert into customers values(10,'Gaurav',300,sysdate,3394,40,'Gwalior');
+
+1 row created.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select cname from customers
+  2  where soundex(cname)='Gourav';
+
+no rows selected
+
+SQL> select cname from customers
+  2  where soundex(cname)=soundex('Gourav');
+
+CNAME
+------------
+Gourav
+Gaurav
+
+SQL> create table cities(name varchar(10));
+
+Table created.
+
+SQL> insert into cities values('Sydney');
+
+1 row created.
+
+SQL> insert into cities values('Sydnee');
+
+1 row created.
+
+SQL> insert into cities values('Sidnee');
+
+1 row created.
+
+SQL> insert into cities values('Kydney');
+
+1 row created.
+
+SQL> select * from cities;
+
+NAME
+----------
+Sydney
+Sydnee
+Sidnee
+Kydney
+
+SQL> select * from cities where soundex(name) =soundex('Sidni');
+
+NAME
+----------
+Sydney
+Sydnee
+Sidnee
+
+SQL>

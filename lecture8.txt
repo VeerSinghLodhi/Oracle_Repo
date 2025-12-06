@@ -1,0 +1,1330 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Nov 18 08:18:05 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select length(cname) from customers;
+
+LENGTH(CNAME)
+-------------
+            4
+            5
+            4
+            5
+            6
+            6
+            6
+            4
+            4
+            6
+
+10 rows selected.
+
+SQL> select length('India') from customers;
+
+LENGTH('INDIA')
+---------------
+              5
+              5
+              5
+              5
+              5
+              5
+              5
+              5
+              5
+              5
+
+10 rows selected.
+
+SQL> select cname,length(cname) From customers;
+
+CNAME        LENGTH(CNAME)
+------------ -------------
+Ravi                     4
+Sumit                    5
+Ajay                     4
+Vijay                    5
+Sanjay                   6
+Gourav                   6
+Sourav                   6
+Raja                     4
+Rani                     4
+Gaurav                   6
+
+10 rows selected.
+
+SQL> select cname,upper(cname),lower(cname),initcap(cname) from customers;
+
+CNAME        UPPER(CNAME) LOWER(CNAME) INITCAP(CNAM
+------------ ------------ ------------ ------------
+Ravi         RAVI         ravi         Ravi
+Sumit        SUMIT        sumit        Sumit
+Ajay         AJAY         ajay         Ajay
+Vijay        VIJAY        vijay        Vijay
+Sanjay       SANJAY       sanjay       Sanjay
+Gourav       GOURAV       gourav       Gourav
+Sourav       SOURAV       sourav       Sourav
+Raja         RAJA         raja         Raja
+Rani         RANI         rani         Rani
+Gaurav       GAURAV       gaurav       Gaurav
+
+10 rows selected.
+
+SQL> select trim('  india  ') from customers;
+
+TRIM(
+-----
+india
+india
+india
+india
+india
+india
+india
+india
+india
+india
+
+10 rows selected.
+
+SQL> select trim('  india  ') from emps;
+
+TRIM(
+-----
+india
+
+SQL> select * from emps;
+
+     EMPNO DOB       DOJ
+---------- --------- ---------
+         1 10-JAN-00 10-JAN-09
+
+SQL> select * from emp;
+
+no rows selected
+
+SQL> select * from products;
+
+       PNO      PRICE
+---------- ----------
+         1      10000
+         1   10000.54
+
+SQL> select trim('  india  ') from products;
+
+TRIM(
+-----
+india
+india
+
+SQL> select trim('  india  ') from dual;
+
+TRIM(
+-----
+india
+
+SQL> select * from dual;
+
+D
+-
+X
+
+SQL> desc dual;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DUMMY                                              VARCHAR2(1)
+
+SQL> insert into dual values('Y');
+insert into dual values('Y')
+            *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+
+31 rows selected.
+
+SQL> select * from emp2;
+
+     EMPNO     SALARY
+---------- ----------
+       101       2000
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+
+SQL> insert into emp1 values(2,'  B',5000);
+
+1 row created.
+
+SQL> insert into emp1 values(3,'B   ',5000);
+
+1 row created.
+
+SQL> insert into emp1 values(4,'  C   ',5000);
+
+1 row created.
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+         2   B              5000
+         3 B                5000
+         4   C              5000
+
+SQL> update emp1 set name=ltrim(name);
+
+4 rows updated.
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+         2 B                5000
+         3 B                5000
+         4 C                5000
+
+SQL> select name,length(name) from emp1;
+
+NAME       LENGTH(NAME)
+---------- ------------
+A                     1
+B                     1
+B                     4
+C                     4
+
+SQL> update emp1 set name=trim(name);
+
+4 rows updated.
+
+SQL> select name,length(name) from emp1;
+
+NAME       LENGTH(NAME)
+---------- ------------
+A                     1
+B                     1
+B                     1
+C                     1
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select * from customers where soundex(cname)=soundex('gourav');
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         6 Gourav               55 03-NOV-25                    20 Sagar
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+SQL> select * from cities;
+
+no rows selected
+
+SQL> insert into cities values('Sagar');
+
+1 row created.
+
+SQL> insert into cities values('Sugar');
+
+1 row created.
+
+SQL> insert into cities values('Saugor');
+
+1 row created.
+
+SQL> insert into cities values('Gagar');
+
+1 row created.
+
+SQL> select * from cities;
+
+NAME
+----------
+Sagar
+Sugar
+Saugor
+Gagar
+
+SQL> select * from cities where soundex(name)=soundex('sager');
+
+NAME
+----------
+Sagar
+Sugar
+Saugor
+
+SQL> select cname,instr(cname,'a') from customers;
+
+CNAME        INSTR(CNAME,'A')
+------------ ----------------
+Ravi                        2
+Sumit                       0
+Ajay                        3
+Vijay                       4
+Sanjay                      2
+Gourav                      5
+Sourav                      5
+Raja                        2
+Rani                        2
+Gaurav                      2
+
+10 rows selected.
+
+SQL> select trim leading 9 from 999379484;
+select trim leading 9 from 999379484
+                    *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select trim (leading 9 from 999379484);
+select trim (leading 9 from 999379484)
+                                     *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select translate('india','i','I') from dual;
+
+TRANS
+-----
+IndIa
+
+SQL> select translate('india','id','ID') from dual;
+
+TRANS
+-----
+InDIa
+
+SQL>
+SQL> select translate('india','id','I') from dual;
+
+TRAN
+----
+InIa
+
+SQL> select translate('india is great','i','I') from dual;
+
+TRANSLATE('IND
+--------------
+IndIa Is great
+
+SQL> select translate('india is great','i','?') from dual;
+
+TRANSLATE('IND
+--------------
+?nd?a ?s great
+
+SQL> select translate('india is great','is','was') from dual;
+
+TRANSLATE('IND
+--------------
+wndwa wa great
+
+SQL> select replace('india is great','is','was') from dual;
+
+REPLACE('INDIAI
+---------------
+india was great
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select concat('Sagar','MP') from dual;
+
+CONCAT(
+-------
+SagarMP
+
+SQL> select concat(cname,city) from customers;
+
+CONCAT(CNAME,CITY)
+----------------------
+RaviIndore
+SumitSagar
+AjaySagar
+VijayIndore
+SanjayIndore
+GouravSagar
+SouravSagar
+RajaBhopal
+RaniBhopal
+GauravGwalior
+
+10 rows selected.
+
+SQL> select cname || city from customers;
+
+CNAME||CITY
+----------------------
+RaviIndore
+SumitSagar
+AjaySagar
+VijayIndore
+SanjayIndore
+GouravSagar
+SouravSagar
+RajaBhopal
+RaniBhopal
+GauravGwalior
+
+10 rows selected.
+
+SQL> select cname || ',' || city from customers;
+
+CNAME||','||CITY
+-----------------------
+Ravi,Indore
+Sumit,Sagar
+Ajay,Sagar
+Vijay,Indore
+Sanjay,Indore
+Gourav,Sagar
+Sourav,Sagar
+Raja,Bhopal
+Rani,Bhopal
+Gaurav,Gwalior
+
+10 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select cname,substr(cname,2) from customers;
+
+CNAME        SUBSTR(CNAM
+------------ -----------
+Ravi         avi
+Sumit        umit
+Ajay         jay
+Vijay        ijay
+Sanjay       anjay
+Gourav       ourav
+Sourav       ourav
+Raja         aja
+Rani         ani
+Gaurav       aurav
+
+10 rows selected.
+
+SQL> select cname,substr(cname,1,4) from customers;
+
+CNAME        SUBS
+------------ ----
+Ravi         Ravi
+Sumit        Sumi
+Ajay         Ajay
+Vijay        Vija
+Sanjay       Sanj
+Gourav       Gour
+Sourav       Sour
+Raja         Raja
+Rani         Rani
+Gaurav       Gaur
+
+10 rows selected.
+
+SQL> select cname,substr(cname,1,11) from customers;
+
+CNAME        SUBSTR(CNAM
+------------ -----------
+Ravi         Ravi
+Sumit        Sumit
+Ajay         Ajay
+Vijay        Vijay
+Sanjay       Sanjay
+Gourav       Gourav
+Sourav       Sourav
+Raja         Raja
+Rani         Rani
+Gaurav       Gaurav
+
+10 rows selected.
+
+SQL> select cname,substr(cname,-11,11) from customers;
+
+CNAME        SUBSTR(CNAM
+------------ -----------
+Ravi
+Sumit
+Ajay
+Vijay
+Sanjay
+Gourav
+Sourav
+Raja
+Rani
+Gaurav
+
+10 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select cname,rpad(city,'-',10) from customers;
+select cname,rpad(city,'-',10) from customers
+                       *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select cname,rpad(city,10,'-') from customers;
+
+CNAME        RPAD(CITY,
+------------ ----------
+Ravi         Indore----
+Sumit        Sagar-----
+Ajay         Sagar-----
+Vijay        Indore----
+Sanjay       Indore----
+Gourav       Sagar-----
+Sourav       Sagar-----
+Raja         Bhopal----
+Rani         Bhopal----
+Gaurav       Gwalior---
+
+10 rows selected.
+
+SQL> select cname,rpad(city,10,'-'),dept from customers;
+
+CNAME        RPAD(CITY,       DEPT
+------------ ---------- ----------
+Ravi         Indore----         10
+Sumit        Sagar-----         20
+Ajay         Sagar-----         10
+Vijay        Indore----         30
+Sanjay       Indore----         10
+Gourav       Sagar-----         20
+Sourav       Sagar-----         10
+Raja         Bhopal----         20
+Rani         Bhopal----         30
+Gaurav       Gwalior---         40
+
+10 rows selected.
+
+SQL> select cname,rpad(city,40,'-'),dept from customers;
+
+CNAME        RPAD(CITY,40,'-')                              DEPT
+------------ ---------------------------------------- ----------
+Ravi         Indore----------------------------------         10
+Sumit        Sagar-----------------------------------         20
+Ajay         Sagar-----------------------------------         10
+Vijay        Indore----------------------------------         30
+Sanjay       Indore----------------------------------         10
+Gourav       Sagar-----------------------------------         20
+Sourav       Sagar-----------------------------------         10
+Raja         Bhopal----------------------------------         20
+Rani         Bhopal----------------------------------         30
+Gaurav       Gwalior---------------------------------         40
+
+10 rows selected.
+
+SQL> select cname,rpad(city,40,'-') from customers;
+
+CNAME        RPAD(CITY,40,'-')
+------------ ----------------------------------------
+Ravi         Indore----------------------------------
+Sumit        Sagar-----------------------------------
+Ajay         Sagar-----------------------------------
+Vijay        Indore----------------------------------
+Sanjay       Indore----------------------------------
+Gourav       Sagar-----------------------------------
+Sourav       Sagar-----------------------------------
+Raja         Bhopal----------------------------------
+Rani         Bhopal----------------------------------
+Gaurav       Gwalior---------------------------------
+
+10 rows selected.
+
+SQL> select cname,lpad(city,40,'-') from customers;
+
+CNAME        LPAD(CITY,40,'-')
+------------ ----------------------------------------
+Ravi         ----------------------------------Indore
+Sumit        -----------------------------------Sagar
+Ajay         -----------------------------------Sagar
+Vijay        ----------------------------------Indore
+Sanjay       ----------------------------------Indore
+Gourav       -----------------------------------Sagar
+Sourav       -----------------------------------Sagar
+Raja         ----------------------------------Bhopal
+Rani         ----------------------------------Bhopal
+Gaurav       ---------------------------------Gwalior
+
+10 rows selected.
+
+SQL> select cname,lpad(city,40,'=') from customers;
+
+CNAME        LPAD(CITY,40,'=')
+------------ ----------------------------------------
+Ravi         ==================================Indore
+Sumit        ===================================Sagar
+Ajay         ===================================Sagar
+Vijay        ==================================Indore
+Sanjay       ==================================Indore
+Gourav       ===================================Sagar
+Sourav       ===================================Sagar
+Raja         ==================================Bhopal
+Rani         ==================================Bhopal
+Gaurav       =================================Gwalior
+
+10 rows selected.
+
+SQL> select cname,lpad(city,40,'_') from customers;
+
+CNAME        LPAD(CITY,40,'_')
+------------ ----------------------------------------
+Ravi         __________________________________Indore
+Sumit        ___________________________________Sagar
+Ajay         ___________________________________Sagar
+Vijay        __________________________________Indore
+Sanjay       __________________________________Indore
+Gourav       ___________________________________Sagar
+Sourav       ___________________________________Sagar
+Raja         __________________________________Bhopal
+Rani         __________________________________Bhopal
+Gaurav       _________________________________Gwalior
+
+10 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select sysdate from customers;
+
+SYSDATE
+---------
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+
+10 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select to_char(doj,'dd-Mon-yyyy') from customers;
+
+TO_CHAR(DOJ
+-----------
+10-Apr-2020
+13-Apr-2020
+30-Sep-2022
+15-Feb-2023
+10-Apr-2020
+03-Nov-2025
+06-Nov-2025
+04-Oct-2025
+16-May-2023
+15-Nov-2025
+
+10 rows selected.
+
+SQL> select to_char(doj,'dd-mon-yyyy') from customers;
+
+TO_CHAR(DOJ
+-----------
+10-apr-2020
+13-apr-2020
+30-sep-2022
+15-feb-2023
+10-apr-2020
+03-nov-2025
+06-nov-2025
+04-oct-2025
+16-may-2023
+15-nov-2025
+
+10 rows selected.
+
+SQL> select to_char(doj,'dd-month-yyyy') from customers;
+
+TO_CHAR(DOJ,'DD-M
+-----------------
+10-april    -2020
+13-april    -2020
+30-september-2022
+15-february -2023
+10-april    -2020
+03-november -2025
+06-november -2025
+04-october  -2025
+16-may      -2023
+15-november -2025
+
+10 rows selected.
+
+SQL> select to_char(doj,'ddth-month-yyyy') from customers;
+
+TO_CHAR(DOJ,'DDTH-M
+-------------------
+10th-april    -2020
+13th-april    -2020
+30th-september-2022
+15th-february -2023
+10th-april    -2020
+03rd-november -2025
+06th-november -2025
+04th-october  -2025
+16th-may      -2023
+15th-november -2025
+
+10 rows selected.
+
+SQL> select to_char(doj,'dd-month-year') from customers;
+
+TO_CHAR(DOJ,'DD-MONTH-YEAR')
+-------------------------------------------------------
+10-april    -twenty twenty
+13-april    -twenty twenty
+30-september-twenty twenty-two
+15-february -twenty twenty-three
+10-april    -twenty twenty
+03-november -twenty twenty-five
+06-november -twenty twenty-five
+04-october  -twenty twenty-five
+16-may      -twenty twenty-three
+15-november -twenty twenty-five
+
+10 rows selected.
+
+SQL> select to_char(doj,'dd-month-Year') from customers;
+
+TO_CHAR(DOJ,'DD-MONTH-YEAR')
+-------------------------------------------------------
+10-april    -Twenty Twenty
+13-april    -Twenty Twenty
+30-september-Twenty Twenty-Two
+15-february -Twenty Twenty-Three
+10-april    -Twenty Twenty
+03-november -Twenty Twenty-Five
+06-november -Twenty Twenty-Five
+04-october  -Twenty Twenty-Five
+16-may      -Twenty Twenty-Three
+15-november -Twenty Twenty-Five
+
+10 rows selected.
+
+SQL> select to_char(doj,'rm-month-Year') from customers;
+
+TO_CHAR(DOJ,'RM-MONTH-YEAR')
+---------------------------------------------------------
+iv  -april    -Twenty Twenty
+iv  -april    -Twenty Twenty
+ix  -september-Twenty Twenty-Two
+ii  -february -Twenty Twenty-Three
+iv  -april    -Twenty Twenty
+xi  -november -Twenty Twenty-Five
+xi  -november -Twenty Twenty-Five
+x   -october  -Twenty Twenty-Five
+v   -may      -Twenty Twenty-Three
+xi  -november -Twenty Twenty-Five
+
+10 rows selected.
+
+SQL> select to_char(doj,'dy-month-Year') from customers;
+
+TO_CHAR(DOJ,'DY-MONTH-YEAR')
+--------------------------------------------------------
+fri-april    -Twenty Twenty
+mon-april    -Twenty Twenty
+fri-september-Twenty Twenty-Two
+wed-february -Twenty Twenty-Three
+fri-april    -Twenty Twenty
+mon-november -Twenty Twenty-Five
+thu-november -Twenty Twenty-Five
+sat-october  -Twenty Twenty-Five
+tue-may      -Twenty Twenty-Three
+sat-november -Twenty Twenty-Five
+
+10 rows selected.
+
+SQL> select to_char(doj,'dddt-month-Year') from customers;
+select to_char(doj,'dddt-month-Year') from customers
+                   *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(doj,'ddt-month-Year') from customers;
+select to_char(doj,'ddt-month-Year') from customers
+                   *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> select to_char(doj,'ddth-month-Year') from customers;
+
+TO_CHAR(DOJ,'DDTH-MONTH-YEAR')
+---------------------------------------------------------
+10th-april    -Twenty Twenty
+13th-april    -Twenty Twenty
+30th-september-Twenty Twenty-Two
+15th-february -Twenty Twenty-Three
+10th-april    -Twenty Twenty
+03rd-november -Twenty Twenty-Five
+06th-november -Twenty Twenty-Five
+04th-october  -Twenty Twenty-Five
+16th-may      -Twenty Twenty-Three
+15th-november -Twenty Twenty-Five
+
+10 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select doj,add_months(doj,10) from customers
+  2  ;
+
+DOJ       ADD_MONTH
+--------- ---------
+10-APR-20 10-FEB-21
+13-APR-20 13-FEB-21
+30-SEP-22 31-JUL-23
+15-FEB-23 15-DEC-23
+10-APR-20 10-FEB-21
+03-NOV-25 03-SEP-26
+06-NOV-25 06-SEP-26
+04-OCT-25 04-AUG-26
+16-MAY-23 16-MAR-24
+15-NOV-25 15-SEP-26
+
+10 rows selected.
+
+SQL> select doj,add_months(doj,10*12)RetirementDate from customers;
+
+DOJ       RETIREMEN
+--------- ---------
+10-APR-20 10-APR-30
+13-APR-20 13-APR-30
+30-SEP-22 30-SEP-32
+15-FEB-23 15-FEB-33
+10-APR-20 10-APR-30
+03-NOV-25 03-NOV-35
+06-NOV-25 06-NOV-35
+04-OCT-25 04-OCT-35
+16-MAY-23 16-MAY-33
+15-NOV-25 15-NOV-35
+
+10 rows selected.
+
+SQL> select doj,datediff(doj,sysdate) from customers;
+select doj,datediff(doj,sysdate) from customers
+           *
+ERROR at line 1:
+ORA-00904: "DATEDIFF": invalid identifier
+
+
+SQL> select date_diff(doj,sysdate) from customers;
+select date_diff(doj,sysdate) from customers
+       *
+ERROR at line 1:
+ORA-00904: "DATE_DIFF": invalid identifier
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select doj,round(doj,'year') from customers;
+
+DOJ       ROUND(DOJ
+--------- ---------
+10-APR-20 01-JAN-20
+13-APR-20 01-JAN-20
+30-SEP-22 01-JAN-23
+15-FEB-23 01-JAN-23
+10-APR-20 01-JAN-20
+03-NOV-25 01-JAN-26
+06-NOV-25 01-JAN-26
+04-OCT-25 01-JAN-26
+16-MAY-23 01-JAN-23
+15-NOV-25 01-JAN-26
+
+10 rows selected.
+
+SQL> select doj,round(doj,'month') from customers;
+
+DOJ       ROUND(DOJ
+--------- ---------
+10-APR-20 01-APR-20
+13-APR-20 01-APR-20
+30-SEP-22 01-OCT-22
+15-FEB-23 01-FEB-23
+10-APR-20 01-APR-20
+03-NOV-25 01-NOV-25
+06-NOV-25 01-NOV-25
+04-OCT-25 01-OCT-25
+16-MAY-23 01-JUN-23
+15-NOV-25 01-NOV-25
+
+10 rows selected.
+
+SQL> select doj,round(doj,'day') from customers;
+
+DOJ       ROUND(DOJ
+--------- ---------
+10-APR-20 12-APR-20
+13-APR-20 12-APR-20
+30-SEP-22 02-OCT-22
+15-FEB-23 12-FEB-23
+10-APR-20 12-APR-20
+03-NOV-25 02-NOV-25
+06-NOV-25 09-NOV-25
+04-OCT-25 05-OCT-25
+16-MAY-23 14-MAY-23
+15-NOV-25 16-NOV-25
+
+10 rows selected.
+
+SQL> select doj,next_day(doj,'Friday') from customers;
+
+DOJ       NEXT_DAY(
+--------- ---------
+10-APR-20 17-APR-20
+13-APR-20 17-APR-20
+30-SEP-22 07-OCT-22
+15-FEB-23 17-FEB-23
+10-APR-20 17-APR-20
+03-NOV-25 07-NOV-25
+06-NOV-25 07-NOV-25
+04-OCT-25 10-OCT-25
+16-MAY-23 19-MAY-23
+15-NOV-25 21-NOV-25
+
+10 rows selected.
+
+SQL> select doj,next_day(doj,'Saturday') from customers;
+
+DOJ       NEXT_DAY(
+--------- ---------
+10-APR-20 11-APR-20
+13-APR-20 18-APR-20
+30-SEP-22 01-OCT-22
+15-FEB-23 18-FEB-23
+10-APR-20 11-APR-20
+03-NOV-25 08-NOV-25
+06-NOV-25 08-NOV-25
+04-OCT-25 11-OCT-25
+16-MAY-23 20-MAY-23
+15-NOV-25 22-NOV-25
+
+10 rows selected.
+
+SQL> select to_char(sysdate,'Month') from dual;
+
+TO_CHAR(S
+---------
+November
+
+SQL> select to_char(sysdate,'mm') from dual;
+
+TO
+--
+11
+
+SQL> select to_char(sysdate,'MM') from dual;
+
+TO
+--
+11
+
+SQL> select to_char(sysdate,'Mon') from dual;
+
+TO_
+---
+Nov
+
+SQL> select * from doj;
+select * from doj
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select sysdate-doj from customers;
+
+SYSDATE-DOJ
+-----------
+ 2048.37648
+ 2045.37648
+ 1145.37648
+ 1007.37648
+ 2048.37648
+ 14.9535301
+ 12.3764815
+ 45.3764815
+ 917.376481
+ 2.99979167
+
+10 rows selected.
+
+SQL> select sysdate-'09-Jan-2005' from customers;
+select sysdate-'09-Jan-2005' from customers
+               *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select sysdate-to_date('09-Jan-2005') from customers;
+
+SYSDATE-TO_DATE('09-JAN-2005')
+------------------------------
+                    7618.37729
+                    7618.37729
+                    7618.37729
+                    7618.37729
+                    7618.37729
+                    7618.37729
+                    7618.37729
+                    7618.37729
+                    7618.37729
+                    7618.37729
+
+10 rows selected.
+
+SQL> select sysdate-to_date('09-Jan-2005')/12 from customers;
+select sysdate-to_date('09-Jan-2005')/12 from customers
+               *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> select sysdate-(to_date('09-Jan-2005'))/12 from customers;
+select sysdate-(to_date('09-Jan-2005'))/12 from customers
+                *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE
+
+
+SQL> select (sysdate-to_date('09-Jan-2005'))/12 from customers;
+
+(SYSDATE-TO_DATE('09-JAN-2005'))/12
+-----------------------------------
+                         634.864827
+                         634.864827
+                         634.864827
+                         634.864827
+                         634.864827
+                         634.864827
+                         634.864827
+                         634.864827
+                         634.864827
+                         634.864827
+
+10 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select greatest(sysdate,doj) from customers;
+
+GREATEST(
+---------
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+18-NOV-25
+
+10 rows selected.
+
+SQL> select least(sysdate,doj) from customers;
+
+LEAST(SYS
+---------
+10-APR-20
+13-APR-20
+30-SEP-22
+15-FEB-23
+10-APR-20
+03-NOV-25
+06-NOV-25
+04-OCT-25
+16-MAY-23
+15-NOV-25
+
+10 rows selected.
+
+SQL> select months_between(sysdate,doj) from customers;
+
+MONTHS_BETWEEN(SYSDATE,DOJ)
+---------------------------
+                 67.2703129
+                 67.1735387
+                 37.6251516
+                 33.1090226
+                 67.2703129
+                 .482475732
+                 .399345131
+                 1.46386126
+                 30.0767645
+                 .096871266
+
+10 rows selected.
+
+SQL> select months_between(sysdate,to_date('09-Jan-2005') from customers;
+select months_between(sysdate,to_date('09-Jan-2005') from customers
+                                                     *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> select months_between(sysdate,to_date('09-Jan-2005')) from customers;
+
+MONTHS_BETWEEN(SYSDATE,TO_DATE('09-JAN-2005'))
+----------------------------------------------
+                                    250.302581
+                                    250.302581
+                                    250.302581
+                                    250.302581
+                                    250.302581
+                                    250.302581
+                                    250.302581
+                                    250.302581
+                                    250.302581
+                                    250.302581
+
+10 rows selected.
+
+SQL>
