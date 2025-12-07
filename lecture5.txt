@@ -1,0 +1,2242 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Nov 11 08:16:52 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+
+13 rows selected.
+
+SQL> create table cricketers(srno number primary key, name varchar(10) not null);
+
+Table created.
+
+SQL> insert into cricketers values(1,'Rohit');
+
+1 row created.
+
+SQL> insert into cricketers values(1,'Rohit');
+insert into cricketers values(1,'Rohit')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (PRINCE.SYS_C004580) violated
+
+
+SQL> insert into cricketers values(2,null);
+insert into cricketers values(2,null)
+                                *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("PRINCE"."CRICKETERS"."NAME")
+
+
+SQL> drop table cricketers;
+
+Table dropped.
+
+SQL> create table cricketers(srno number constraint srno_pk primary key,
+  2  name varchar(10) constraint name_notnull not null,
+  3  runs number constraint runs_check check(runs>=0));
+
+Table created.
+
+SQL> insert into cricketers values(1,'Rohit',50);
+
+1 row created.
+
+SQL> insert into cricketers values(1,'Rohit',50);
+insert into cricketers values(1,'Rohit',50)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (PRINCE.SRNO_PK) violated
+
+
+SQL> insert into cricketers values(2,null,50);
+insert into cricketers values(2,null,50)
+                                *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("PRINCE"."CRICKETERS"."NAME")
+
+
+SQL> insert into cricketers values(2,'Virat',-50);
+insert into cricketers values(2,'Virat',-50)
+*
+ERROR at line 1:
+ORA-02290: check constraint (PRINCE.RUNS_CHECK) violated
+
+
+SQL> desc user_constraints;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ OWNER                                     NOT NULL VARCHAR2(30)
+ CONSTRAINT_NAME                           NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                    VARCHAR2(1)
+ TABLE_NAME                                NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                   LONG
+ R_OWNER                                            VARCHAR2(30)
+ R_CONSTRAINT_NAME                                  VARCHAR2(30)
+ DELETE_RULE                                        VARCHAR2(9)
+ STATUS                                             VARCHAR2(8)
+ DEFERRABLE                                         VARCHAR2(14)
+ DEFERRED                                           VARCHAR2(9)
+ VALIDATED                                          VARCHAR2(13)
+ GENERATED                                          VARCHAR2(14)
+ BAD                                                VARCHAR2(3)
+ RELY                                               VARCHAR2(4)
+ LAST_CHANGE                                        DATE
+ INDEX_OWNER                                        VARCHAR2(30)
+ INDEX_NAME                                         VARCHAR2(30)
+ INVALID                                            VARCHAR2(7)
+ VIEW_RELATED                                       VARCHAR2(14)
+
+SQL> select * from user_contraints;
+select * from user_contraints
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from user_constraints;
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SRNO_PK                        P
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+CRICKETERS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               11-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SRNO_PK
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004578                    U
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+EMP
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004578
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004577                    P
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+EMP
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004577
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004573                    U
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+ACCOUNTS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004573
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004572                    P
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+ACCOUNTS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004572
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004569                    C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+ACCOUNTS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+"NAME" IS NOT NULL
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004570                    C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+ACCOUNTS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+"ADDRESS" IS NOT NULL
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004571                    C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+ACCOUNTS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+balance>5000
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004574                    C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+EMP
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+"NAME" IS NOT NULL
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004575                    C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+EMP
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+dept in('IT','Sales','Finance')
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         SYS_C004576                    C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+EMP
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+salary>=1000
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     GENERATED NAME          08-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         NAME_NOTNULL                   C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+CRICKETERS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+"NAME" IS NOT NULL
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               11-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+PRINCE                         RUNS_CHECK                     C
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+CRICKETERS
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+runs>=0
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+                                                                        ENABLED
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+NOT DEFERRABLE IMMEDIATE VALIDATED     USER NAME               11-NOV-25
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+OWNER                          CONSTRAINT_NAME                C
+------------------------------ ------------------------------ -
+TABLE_NAME
+------------------------------
+SEARCH_CONDITION
+--------------------------------------------------------------------------------
+R_OWNER                        R_CONSTRAINT_NAME              DELETE_RU STATUS
+------------------------------ ------------------------------ --------- --------
+DEFERRABLE     DEFERRED  VALIDATED     GENERATED      BAD RELY LAST_CHAN
+-------------- --------- ------------- -------------- --- ---- ---------
+INDEX_OWNER                    INDEX_NAME                     INVALID
+------------------------------ ------------------------------ -------
+VIEW_RELATED
+--------------
+
+
+13 rows selected.
+
+SQL> desc user_constraints;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ OWNER                                     NOT NULL VARCHAR2(30)
+ CONSTRAINT_NAME                           NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                    VARCHAR2(1)
+ TABLE_NAME                                NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                   LONG
+ R_OWNER                                            VARCHAR2(30)
+ R_CONSTRAINT_NAME                                  VARCHAR2(30)
+ DELETE_RULE                                        VARCHAR2(9)
+ STATUS                                             VARCHAR2(8)
+ DEFERRABLE                                         VARCHAR2(14)
+ DEFERRED                                           VARCHAR2(9)
+ VALIDATED                                          VARCHAR2(13)
+ GENERATED                                          VARCHAR2(14)
+ BAD                                                VARCHAR2(3)
+ RELY                                               VARCHAR2(4)
+ LAST_CHANGE                                        DATE
+ INDEX_OWNER                                        VARCHAR2(30)
+ INDEX_NAME                                         VARCHAR2(30)
+ INVALID                                            VARCHAR2(7)
+ VIEW_RELATED                                       VARCHAR2(14)
+
+SQL> select constraint_name,constraint_type,table_name from user_constraints;
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+RUNS_CHECK                     C CRICKETERS
+NAME_NOTNULL                   C CRICKETERS
+SYS_C004576                    C EMP
+SYS_C004575                    C EMP
+SYS_C004574                    C EMP
+SYS_C004571                    C ACCOUNTS
+SYS_C004570                    C ACCOUNTS
+SYS_C004569                    C ACCOUNTS
+SYS_C004572                    P ACCOUNTS
+SYS_C004573                    U ACCOUNTS
+SYS_C004577                    P EMP
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+SYS_C004578                    U EMP
+SRNO_PK                        P CRICKETERS
+
+13 rows selected.
+
+SQL> select constraint_name,constraint_type,table_name from user_constraints
+  2  where table_name='CRICKETERS';
+
+CONSTRAINT_NAME                C TABLE_NAME
+------------------------------ - ------------------------------
+NAME_NOTNULL                   C CRICKETERS
+RUNS_CHECK                     C CRICKETERS
+SRNO_PK                        P CRICKETERS
+
+SQL> select * from trains;
+select * from trains
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table trains
+  2  (tno number(5) primary key,
+  3  name varchar(10),
+  4  source varchar(10),
+  5  destination varchar(10));
+
+Table created.
+
+SQL> insert into trains values
+  2  (1001,'A Exp.','Delhi','Mumbai');
+
+1 row created.
+
+SQL> insert into trains values
+  2  (1002,'B Exp.','Delhi','Hyderabad');
+
+1 row created.
+
+SQL> insert into trains values
+  2  (1003,'C Exp.','Indore','Pune');
+
+1 row created.
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> desc trains;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TNO                                       NOT NULL NUMBER(5)
+ NAME                                               VARCHAR2(10)
+ SOURCE                                             VARCHAR2(10)
+ DESTINATION                                        VARCHAR2(10)
+
+SQL> create table reservation
+  2  (pnrno number(3) primary key,
+  3  name varchar(10),
+  4  doj date,
+  5  trainno number(4));
+
+Table created.
+
+SQL> insert into reservation values
+  2  (9445,'Ravi',sysdate,1002);
+(9445,'Ravi',sysdate,1002)
+ *
+ERROR at line 2:
+ORA-01438: value larger than specified precision allowed for this column
+
+
+SQL> insert into reservation values
+  2  (945,'Ravi',sysdate,1002);
+
+1 row created.
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from reservation;
+
+     PNRNO NAME       DOJ          TRAINNO
+---------- ---------- --------- ----------
+       945 Ravi       11-NOV-25       1002
+
+SQL> insert into reservation values
+  2  (925,'Ravi',sysdate,1009);
+
+1 row created.
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from reservation;
+
+     PNRNO NAME       DOJ          TRAINNO
+---------- ---------- --------- ----------
+       945 Ravi       11-NOV-25       1002
+       925 Ravi       11-NOV-25       1009
+
+SQL> dr
+SP2-0042: unknown command "dr" - rest of line ignored.
+SQL> drop table reservation;
+
+Table dropped.
+
+SQL> create table reservation
+  2  (pnrno number(3) primary key,
+  3  name varchar(10),
+  4  doj date,
+  5  trainno number(4) references trains);
+
+Table created.
+
+SQL> insert into reservation values
+  2  (945,'Ravi',sysdate,1002);
+
+1 row created.
+
+SQL> insert into reservation values
+  2  (925,'Ravi',sysdate,1009);
+insert into reservation values
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (PRINCE.SYS_C004587) violated - parent key not
+found
+
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from reservation;
+
+     PNRNO NAME       DOJ          TRAINNO
+---------- ---------- --------- ----------
+       945 Ravi       11-NOV-25       1002
+
+SQL> create table workers
+  2  (workcd number,
+  3  name varchar(10));
+
+Table created.
+
+SQL> create table salary
+  2  (workcd number references workers,
+  3  sal number);
+(workcd number references workers,
+                          *
+ERROR at line 2:
+ORA-02268: referenced table does not have a primary key
+
+
+SQL>
+SQL> drop table workers;
+
+Table dropped.
+
+SQL> create table workers
+  2  (workcd number primary key,
+  3  name varchar(10));
+
+Table created.
+
+SQL> create table salary
+  2  (workcd varchar(10) references workers,
+  3  sal number);
+(workcd varchar(10) references workers,
+ *
+ERROR at line 2:
+ORA-02267: column type incompatible with referenced column type
+
+
+SQL> create table salary
+  2  (workcd number references workers,
+  3  sal number);
+
+Table created.
+
+SQL> insert into salary(1,50000);
+insert into salary(1,50000)
+                   *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into salary values(1,50000);
+insert into salary values(1,50000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (PRINCE.SYS_C004589) violated - parent key not
+found
+
+
+SQL> insert into workers values
+  2  (1,'A');
+
+1 row created.
+
+SQL> insert into workers values
+  2  (2,'B');
+
+1 row created.
+
+SQL> insert into salary values(1,50000);
+
+1 row created.
+
+SQL> insert into salary values(10,50000);
+insert into salary values(10,50000)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (PRINCE.SYS_C004589) violated - parent key not
+found
+
+
+SQL> select * from workerrs;
+select * from workerrs
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from workers;
+
+    WORKCD NAME
+---------- ----------
+         1 A
+         2 B
+
+SQL> select * from salary;
+
+    WORKCD        SAL
+---------- ----------
+         1      50000
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from workers;
+
+    WORKCD NAME
+---------- ----------
+         1 A
+         2 B
+
+SQL> select * from salary;
+
+    WORKCD        SAL
+---------- ----------
+         1      50000
+
+SQL> insert into salary values(2,30000);
+
+1 row created.
+
+SQL> insert into salary values(2,23000);
+
+1 row created.
+
+SQL> select * from workers;
+
+    WORKCD NAME
+---------- ----------
+         1 A
+         2 B
+
+SQL> select * from salary;
+
+    WORKCD        SAL
+---------- ----------
+         1      50000
+         2      30000
+         2      23000
+
+SQL> create table books(bookno number(3) primary key);
+
+Table created.
+
+SQL> create table issue(bno number(5) references books);
+
+Table created.
+
+SQL> drop table issue;
+
+Table dropped.
+
+SQL> create table issue(bno number(2) references books);
+
+Table created.
+
+SQL> drop table books;
+drop table books
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+
+SQL> drop table issue;
+
+Table dropped.
+
+SQL> drop table books;
+
+Table dropped.
+
+SQL> create table books
+  2  (bookno number primary key,
+  3  name varchar(10),
+  4  edition number);
+
+Table created.
+
+SQL> insert into books values
+  2  (1,'SQL',2023);
+
+1 row created.
+
+SQL> insert into books values
+  2  (2,'Java',2024);
+
+1 row created.
+
+SQL> select * from books;
+
+    BOOKNO NAME          EDITION
+---------- ---------- ----------
+         1 SQL              2023
+         2 Java             2024
+
+SQL> create table members
+  2  (memcd number primary key,
+  3  name varchar(10),
+  4  contact number);
+
+Table created.
+
+SQL> insert into members values
+  2  (901,'Rajesh',9585);
+
+1 row created.
+
+SQL> insert into members values
+  2  (902,'Amit',9285);
+
+1 row created.
+
+SQL> select  * from members;
+
+     MEMCD NAME          CONTACT
+---------- ---------- ----------
+       901 Rajesh           9585
+       902 Amit             9285
+
+SQL> create table issue
+  2  (issuecd number primary key,
+  3  bcd number references books,
+  4  mcd number references members,
+  5  doi date,
+  6  dor date);
+
+Table created.
+
+SQL> insert into issue values(1,1,902,'12-Nov-2025','15-Nov-2025');
+
+1 row created.
+
+SQL> insert into issue values(2,9,902,'12-Nov-2025','15-Nov-2025');
+insert into issue values(2,9,902,'12-Nov-2025','15-Nov-2025')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (PRINCE.SYS_C004596) violated - parent key not
+found
+
+
+SQL> insert into issue values(2,2,905,'12-Nov-2025','15-Nov-2025');
+insert into issue values(2,2,905,'12-Nov-2025','15-Nov-2025')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (PRINCE.SYS_C004597) violated - parent key not
+found
+
+
+SQL>
