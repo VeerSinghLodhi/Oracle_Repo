@@ -1,0 +1,1008 @@
+
+Topics 
+
+1. Left Join
+2.Right Join
+3. Self Join
+4. Set Function(eg. union,intersect,minus)
+
+
+
+    TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+
+
+
+	A					
+         6 Deepika         EC              16800 10-FEB-25
+
+
+
+
+	B
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Nov 22 08:42:56 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: price
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+SQL> connect prince/sagar
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+STOCK                          TABLE
+SALES                          TABLE
+
+33 rows selected.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select * from stock;
+
+    PRODCD NAME       COMPANY
+---------- ---------- ----------
+       101 Monitor    HP
+
+SQL> select * from sales;
+
+no rows selected
+
+SQL> insert into stock values(102,'Printer','Epson');
+
+1 row created.
+
+SQL> insert into stock values(103,'Mouse','Logitech');
+
+1 row created.
+
+SQL> insert into stock values(104,'Processor','AMD');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from sales;
+
+no rows selected
+
+SQL> desc sales;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PNO                                                NUMBER(3)
+ CNAME                                              VARCHAR2(10)
+
+SQL> insert into sales(101,'A');
+insert into sales(101,'A')
+                  *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into sales values(101,'A');
+
+1 row created.
+
+SQL> insert into sales values(104,'D');
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from stock;
+
+    PRODCD NAME       COMPANY
+---------- ---------- ----------
+       101 Monitor    HP
+       102 Printer    Epson
+       103 Mouse      Logitech
+       104 Processor  AMD
+
+SQL> select * from sales;
+
+       PNO CNAME
+---------- ----------
+       101 A
+       104 D
+
+SQL> select prodcd,name,company,cname
+  2  from stock,sales
+  3  where procd=pno;
+where procd=pno
+      *
+ERROR at line 3:
+ORA-00904: "PROCD": invalid identifier
+
+
+SQL> select prodcd,name,company,cname
+  2  from stock,sales
+  3  where prodcd=pno;
+
+    PRODCD NAME       COMPANY    CNAME
+---------- ---------- ---------- ----------
+       101 Monitor    HP         A
+       104 Processor  AMD        D
+
+SQL> select prodcd,name,company,cname
+  2  from stock,sales
+  3  where prodcd(*)=pno;
+where prodcd(*)=pno
+             *
+ERROR at line 3:
+ORA-00936: missing expression
+
+
+SQL> select prodcd,name,company,cname
+  2  from stock,sales
+  3  where prodcd=pno(+);
+
+    PRODCD NAME       COMPANY    CNAME
+---------- ---------- ---------- ----------
+       101 Monitor    HP         A
+       104 Processor  AMD        D
+       103 Mouse      Logitech
+       102 Printer    Epson
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from reservation;
+
+     PNRNO NAME       DOJ          TRAINNO
+---------- ---------- --------- ----------
+       945 Ravi       11-NOV-25       1002
+
+SQL> select tno,t.name,source,destination,r.name,doj
+  2  from trains t,reservation r
+  3  where tno=trainno;
+
+       TNO NAME       SOURCE     DESTINATIO NAME       DOJ
+---------- ---------- ---------- ---------- ---------- ---------
+      1002 B Exp.     Delhi      Hyderabad  Ravi       11-NOV-25
+
+SQL> select tno,t.name,source,destination,r.name,doj
+  2  from trains t,reservation r
+  3  where tno=trainno(+);
+
+       TNO NAME       SOURCE     DESTINATIO NAME       DOJ
+---------- ---------- ---------- ---------- ---------- ---------
+      1002 B Exp.     Delhi      Hyderabad  Ravi       11-NOV-25
+      1003 C Exp.     Indore     Pune
+      1001 A Exp.     Delhi      Mumbai
+
+SQL> select tno,t.name,source,destination,r.name,doj
+  2  from trains t,reservation r
+  3  where tno(+)=trainno;
+
+       TNO NAME       SOURCE     DESTINATIO NAME       DOJ
+---------- ---------- ---------- ---------- ---------- ---------
+      1002 B Exp.     Delhi      Hyderabad  Ravi       11-NOV-25
+
+SQL> desc reservation;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PNRNO                                     NOT NULL NUMBER(3)
+ NAME                                               VARCHAR2(10)
+ DOJ                                                DATE
+ TRAINNO                                            NUMBER(4)
+
+SQL> create table res2(name varchar(10), trainno number(4));
+
+Table created.
+
+SQL> insert into res2 values('A',1002);
+
+1 row created.
+
+SQL> insert into res2 values('B',1020);
+
+1 row created.
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from res2;
+
+NAME          TRAINNO
+---------- ----------
+A                1002
+B                1020
+
+SQL> select tno,source,dest,r.name
+  2  from trains,res2 r
+  3  where tno=trainno;
+select tno,source,dest,r.name
+                  *
+ERROR at line 1:
+ORA-00904: "DEST": invalid identifier
+
+
+SQL> select tno,source,destination,r.name
+  2  from trains,res2 r
+  3  where tno=trainno;
+
+       TNO SOURCE     DESTINATIO NAME
+---------- ---------- ---------- ----------
+      1002 Delhi      Hyderabad  A
+
+SQL> select tno,source,dest,r.name
+  2  from trains,res2 r
+  3  where tno(+)=trainno;
+select tno,source,dest,r.name
+                  *
+ERROR at line 1:
+ORA-00904: "DEST": invalid identifier
+
+
+SQL> 1
+  1* select tno,source,dest,r.name
+SQL> c/dest/destination
+  1* select tno,source,destination,r.name
+SQL> /
+
+       TNO SOURCE     DESTINATIO NAME
+---------- ---------- ---------- ----------
+      1002 Delhi      Hyderabad  A
+                                 B
+
+SQL> select * from trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from reservation;
+
+     PNRNO NAME       DOJ          TRAINNO
+---------- ---------- --------- ----------
+       945 Ravi       11-NOV-25       1002
+
+SQL> select tno,t.name,source,destination,r.name,doj
+  2  from trains t
+  3  left join reservation r on t.tno=r.trainnno;
+left join reservation r on t.tno=r.trainnno
+                                 *
+ERROR at line 3:
+ORA-00904: "R"."TRAINNNO": invalid identifier
+
+
+SQL> select tno,t.name,source,destination,r.name,doj
+  2  from trains t
+  3  left join reservation r on t.tno=r.trainno;
+
+       TNO NAME       SOURCE     DESTINATIO NAME       DOJ
+---------- ---------- ---------- ---------- ---------- ---------
+      1002 B Exp.     Delhi      Hyderabad  Ravi       11-NOV-25
+      1003 C Exp.     Indore     Pune
+      1001 A Exp.     Delhi      Mumbai
+
+SQL> select tno,t.name,source,destination,r.name,doj
+  2  from trains t
+  3  left inner join reservation r on t.tno=r.trainno;
+left inner join reservation r on t.tno=r.trainno
+     *
+ERROR at line 3:
+ORA-00905: missing keyword
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+STOCK                          TABLE
+SALES                          TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+RES2                           TABLE
+
+34 rows selected.
+
+SQL> select * from products;
+
+       PNO      PRICE
+---------- ----------
+         1      10000
+         1   10000.54
+
+SQL> select * from emp2;
+
+     EMPNO     SALARY
+---------- ----------
+       101       2000
+
+SQL> select * from emps;
+
+     EMPNO DOB       DOJ
+---------- --------- ---------
+         1 10-JAN-00 10-JAN-09
+
+SQL> connect
+Enter user-name: om
+Enter password:
+ERROR:
+ORA-01005: null password given; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> genniuus
+SP2-0042: unknown command "genniuus" - rest of line ignored.
+SQL> connect
+Enter user-name: om
+Enter password:
+Connected.
+SQL>
+SQL> select   * from  faculty;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> select salary from faculty where name='Deepika';
+
+    SALARY
+----------
+     16800
+
+SQL> select * from faculty where salary>16800;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+
+SQL>
+SQL> select b.name,b.dept,b.salary
+  2  from faculty a,faculty b
+  3  where
+  4  a.name='Deepika'
+  5  where
+  6  b.salary>a.salary;
+where
+*
+ERROR at line 5:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select b.name,b.dept,b.salary
+  2  from faculty a,faculty b
+  3  where
+  4  a.name='Deepika'
+  5  and
+  6  a.salary>b.salary;
+
+NAME            DEPT           SALARY
+--------------- ---------- ----------
+Mahima          Maths           14700
+
+SQL> 66
+SP2-0226: Invalid line number
+SQL> 6
+  6* a.salary>b.salary
+SQL> a.salary<b.salary
+  6* a.salary>b.salary.salary<b.salary
+SQL> /
+a.salary>b.salary.salary<b.salary
+                        *
+ERROR at line 6:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+FACULTY                        TABLE
+STUDENTS                       TABLE
+EMP                            TABLE
+ACCOUNTS                       TABLE
+MEMBERS                        TABLE
+TRANS                          TABLE
+RESULT                         TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+PATIENT                        TABLE
+PRODUCTS                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+ISSUE2                         TABLE
+SALES                          TABLE
+
+14 rows selected.
+
+SQL> select * from faculty;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> select b.name,b.dept,b.salary
+  2  from faculty a,faculty b
+  3  where
+  4  a.name='Deepika'
+  5  and
+  6  b.salary>a.salary;
+
+NAME            DEPT           SALARY
+--------------- ---------- ----------
+Akash           CS              22050
+Gajendra        CS              19950
+Vivek           Civil           22050
+Nainse          Mech            30450
+
+SQL> select * from faculty;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> select* from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+FACULTY                        TABLE
+STUDENTS                       TABLE
+EMP                            TABLE
+ACCOUNTS                       TABLE
+MEMBERS                        TABLE
+TRANS                          TABLE
+RESULT                         TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+PATIENT                        TABLE
+PRODUCTS                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+ISSUE2                         TABLE
+SALES                          TABLE
+
+14 rows selected.
+
+SQL> select * from products;s;s;
+select * from products;s;s
+                      *
+ERROR at line 1:
+ORA-00911: invalid character
+
+
+SQL> select * from products;
+
+       PNO PNAME           PRICE        DIS        MRP
+---------- ---------- ---------- ---------- ----------
+       101 Monitor          6000        300       5700
+
+SQL>
+SQL> select*    from stock;
+
+       PNO PNAME      COMPANY
+---------- ---------- ----------
+         1 Monitor    HP
+         2 Printer    Samsung
+         3 Processor  Intel
+
+SQL> select*    from books;
+
+    BOOKCD NAME       PUBLISHER
+---------- ---------- ----------
+       501 SQL        MS
+       502 Java       MS
+        50 Windows    TMH
+       504 Linux      BPB
+       505 Python     360
+       506 .Net       Abc
+
+6 rows selected.
+
+SQL> alter table books add price number;
+
+Table altered.
+
+SQL> update books set price=400 where bookcd=501;
+
+1 row updated.
+
+SQL> update books set price=450 where bookcd=502;
+
+1 row updated.
+
+SQL> update books set price=200 where bookcd=503;
+
+0 rows updated.
+
+SQL> update books set price=670 where bookcd=504;
+
+1 row updated.
+
+SQL> update books set price=670 where price is null;
+
+3 rows updated.
+
+SQL> select*    from books;
+
+    BOOKCD NAME       PUBLISHER       PRICE
+---------- ---------- ---------- ----------
+       501 SQL        MS                400
+       502 Java       MS                450
+        50 Windows    TMH               670
+       504 Linux      BPB               670
+       505 Python     360               670
+       506 .Net       Abc               670
+
+6 rows selected.
+
+SQL> update books set price=500 where bookcd=504;
+
+1 row updated.
+
+SQL> update books set price=530 where bookcd=505;
+
+1 row updated.
+
+SQL> select*    from books;
+
+    BOOKCD NAME       PUBLISHER       PRICE
+---------- ---------- ---------- ----------
+       501 SQL        MS                400
+       502 Java       MS                450
+        50 Windows    TMH               670
+       504 Linux      BPB               500
+       505 Python     360               530
+       506 .Net       Abc               670
+
+6 rows selected.
+
+SQL> select a.name,a.puubisher,a.price
+  2  from books a,books b
+  3  where
+  4  b.name='Linux'
+  5  and
+  6  a.price>b.price;
+select a.name,a.puubisher,a.price
+              *
+ERROR at line 1:
+ORA-00904: "A"."PUUBISHER": invalid identifier
+
+
+SQL> select a.name,a.pubisher,a.price
+  2  from books a,books b
+  3  where
+  4
+SQL> select a.name,a.publisher,a.price
+  2  from books a,books b
+  3  where
+  4  b.name='Linux'
+  5  and
+  6  a.price>b.price;
+
+NAME       PUBLISHER       PRICE
+---------- ---------- ----------
+Windows    TMH               670
+Python     360               530
+.Net       Abc               670
+
+SQL> create table list1(srno number,name varchar(10),city varchar(10));
+
+Table created.
+
+SQL> create table list2 as select * from list1;
+
+Table created.
+
+SQL> insert into list1 values(1,'Raja','Sagar');
+
+1 row created.
+
+SQL> insert into list1 values(2,'Rani','Sagar');
+
+1 row created.
+
+SQL> insert into list1 values(3,'Rajkumar','Sagar');
+
+1 row created.
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> insert into list2 values(1,'Raja','Sagar');
+
+1 row created.
+
+SQL> insert into list2 values(2,'Rani','Bhopal');
+
+1 row created.
+
+SQL> insert into list2 values(5,'Sevak','Indore');
+
+1 row created.
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         5 Sevak      Indore
+
+SQL> select * from list1
+  2  union
+  3  select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         5 Sevak      Indore
+
+SQL> select * from list1
+  2  union
+  3  select * from faculty;
+select * from list1
+*
+ERROR at line 1:
+ORA-01789: query block has incorrect number of result columns
+
+
+SQL> select * from faculty;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> select * from list1
+  2  union
+  3  select tcd,name,dept;
+select tcd,name,dept
+                   *
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> select * from list1
+  2  union
+  3  select tcd,name,dept from faculty;
+
+      SRNO NAME            CITY
+---------- --------------- ----------
+         1 Akash           CS
+         1 Raja            Sagar
+         2 Gajendra        CS
+         2 Rani            Sagar
+         3 Rajkumar        Sagar
+         3 Vivek           Civil
+         4 Nainse          Mech
+         5 Mahima          Maths
+         6 Deepika         EC
+
+9 rows selected.
+
+SQL> create table list3 as select * from list1 where srno=1;
+
+Table created.
+
+SQL> select * from list1
+  2  union
+  3  select * from list2
+  4  union
+  5  select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         5 Sevak      Indore
+
+SQL> select * from list1
+  2  union all
+  3  select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         5 Sevak      Indore
+
+6 rows selected.
+
+SQL> select * from list1
+  2
+SQL>
+SQL> select * from stock;
+
+       PNO PNAME      COMPANY
+---------- ---------- ----------
+         1 Monitor    HP
+         2 Printer    Samsung
+         3 Processor  Intel
+
+SQL> select * from list1
+  2  union
+  3  select pno,pname from stock;
+select * from list1
+*
+ERROR at line 1:
+ORA-01789: query block has incorrect number of result columns
+
+
+SQL> select * from list1
+  2  union
+  3  select pno,pname,null from stock;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Monitor
+         1 Raja       Sagar
+         2 Printer
+         2 Rani       Sagar
+         3 Processor
+         3 Rajkumar   Sagar
+
+6 rows selected.
+
+SQL> select * from list1
+  2  union
+  3  select 0,pname,company from stock;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         0 Monitor    HP
+         0 Printer    Samsung
+         0 Processor  Intel
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+6 rows selected.
+
+SQL> select * from list1
+  2  intersect
+  3  select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+
+SQL> select * from list1
+  2  intersect
+  3  select * from list2
+  4  intersect
+  5  select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+
+SQL> select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+
+SQL> update list3 set name='Mantri' where srno=1;
+
+1 row updated.
+
+SQL> select * from list1
+  2  intersect
+  3  select * from list2
+  4  intersect
+  5  select * from list3;
+
+no rows selected
+
+SQL> select * from list1
+  2  minu
+  3
+SQL> select * from list1
+  2  minus
+  3  select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         5 Sevak      Indore
+
+SQL> select * from list2
+  2  minus
+  3  select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         2 Rani       Bhopal
+         5 Sevak      Indore
+
+SQL>

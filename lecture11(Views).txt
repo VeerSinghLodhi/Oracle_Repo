@@ -1,0 +1,2292 @@
+		VIEW
+========================================================
+View is an 'image' of a table.
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Nov 25 08:40:19 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from list1;
+select * from list1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> connect
+Enter user-name: om
+Enter password:
+Connected.
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         5 Sevak      Indore
+
+SQL> select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+
+SQL> insert into list3 values(6,'Senapati','Gwalior');
+
+1 row created.
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         5 Sevak      Indore
+
+SQL> select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         6 Senapati   Gwalior
+
+SQL> select * from list1
+  2  union
+  3  select * from list2
+  4  union all
+  5  select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         5 Sevak      Indore
+         1 Raja       Sagar
+         6 Senapati   Gwalior
+
+7 rows selected.
+
+SQL> select * from list1
+  2  union
+  3  select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         5 Sevak      Indore
+
+SQL> select * from list1
+  2  union
+  3  select * from list2
+  4  intersect
+  5  select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+
+SQL> select * from list1
+  2  intersect
+  3  select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+
+SQL> select * from list1
+  2  minus
+  3  select * from list2
+  4  union
+  5  select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         6 Senapati   Gwalior
+
+SQL> select * from list2
+  2  union
+  3  select * from list3;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         5 Sevak      Indore
+         6 Senapati   Gwalior
+
+SQL>
+SQL> select * from list1
+  2  minus
+  3  select * from list2
+  4  intersect
+  5  select * from list3;
+
+no rows selected
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         5 Sevak      Indore
+
+SQL> select * from list1
+  2  minux
+  3
+SQL> select * from list1
+  2  minus
+  3  select * from list2;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> select * from customers;
+select * from customers
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from faculty;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> create view faculty_view as select * from faculty;
+create view faculty_view as select * from faculty
+            *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> show user
+USER is "OM"
+SQL> connect
+Enter user-name: system
+Enter password:
+ERROR:
+ORA-01017: invalid username/password; logon denied
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect system/manager
+Connected.
+SQL> grant  create view to om;
+
+Grant succeeded.
+
+SQL> grant  create view to price;
+grant  create view to price
+                      *
+ERROR at line 1:
+ORA-01917: user or role 'PRICE' does not exist
+
+
+SQL> grant  create view to prince;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: om
+Enter password:
+Connected.
+SQL> create view faculty_view as select * from faculty;
+
+View created.
+
+SQL> select * from faculty_view;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+FACULTY                        TABLE
+STUDENTS                       TABLE
+EMP                            TABLE
+ACCOUNTS                       TABLE
+MEMBERS                        TABLE
+TRANS                          TABLE
+RESULT                         TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+PATIENT                        TABLE
+PRODUCTS                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+ISSUE2                         TABLE
+SALES                          TABLE
+LIST1                          TABLE
+LIST2                          TABLE
+LIST3                          TABLE
+FACULTY_VIEW                   VIEW
+
+18 rows selected.
+
+SQL> desc faculty_view;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TCD                                                NUMBER(3)
+ NAME                                               VARCHAR2(15)
+ DEPT                                               VARCHAR2(10)
+ SALARY                                             NUMBER(5)
+ JOIN_DATE                                          DATE
+
+SQL> select * from faculty;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> select * from faculty_view;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         3 Vivek           Civil           22050 05-NOV-25
+         4 Nainse          Mech            30450 25-AUG-25
+         5 Mahima          Maths           14700 07-NOV-25
+         6 Deepika         EC              16800 10-FEB-25
+
+6 rows selected.
+
+SQL> select * from faculty where salary>=2000 and salary<=40000
+  2  order by join_date;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         2 Gajendra        CS              19950 05-JUL-21
+         6 Deepika         EC              16800 10-FEB-25
+         4 Nainse          Mech            30450 25-AUG-25
+         3 Vivek           Civil           22050 05-NOV-25
+         5 Mahima          Maths           14700 07-NOV-25
+
+6 rows selected.
+
+SQL> select * from faculty where salary>=20000 and salary<=40000
+  2  order by join_date;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         4 Nainse          Mech            30450 25-AUG-25
+         3 Vivek           Civil           22050 05-NOV-25
+
+SQL> create view salary_View a
+  2
+SQL> create view salary_View
+  2  as
+  3  select * from faculty where salary>=20000 and salary<=40000
+  4  order by join_date;
+
+View created.
+
+SQL> select * from salary_view;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         4 Nainse          Mech            30450 25-AUG-25
+         3 Vivek           Civil           22050 05-NOV-25
+
+SQL> update faculty set salary=26000 where tcd=6;
+
+1 row updated.
+
+SQL> select * from salary_view;
+
+       TCD NAME            DEPT           SALARY JOIN_DATE
+---------- --------------- ---------- ---------- ---------
+         1 Akash           CS              22050 20-SEP-20
+         6 Deepika         EC              26000 10-FEB-25
+         4 Nainse          Mech            30450 25-AUG-25
+         3 Vivek           Civil           22050 05-NOV-25
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+FACULTY                        TABLE
+STUDENTS                       TABLE
+EMP                            TABLE
+ACCOUNTS                       TABLE
+MEMBERS                        TABLE
+TRANS                          TABLE
+RESULT                         TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+PATIENT                        TABLE
+PRODUCTS                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+ISSUE2                         TABLE
+SALES                          TABLE
+LIST1                          TABLE
+LIST2                          TABLE
+LIST3                          TABLE
+FACULTY_VIEW                   VIEW
+SALARY_VIEW                    VIEW
+
+19 rows selected.
+
+SQL> select * from stock;
+
+       PNO PNAME      COMPANY
+---------- ---------- ----------
+         1 Monitor    HP
+         2 Printer    Samsung
+         3 Processor  Intel
+
+SQL> select * from sales;
+
+    BILLNO CNAME             PNO
+---------- ---------- ----------
+       101 Yash                2
+       102 Yash                2
+
+SQL> create view stock_sales_join_view
+  2  as
+  3  select pno,pname,company,cname
+  4  from stock,sales
+  5  where
+  6  stock.pno=sales.pno;
+select pno,pname,company,cname
+       *
+ERROR at line 3:
+ORA-00918: column ambiguously defined
+
+
+SQL> 3
+  3* select pno,pname,company,cname
+SQL> c/pno/stock.pno
+  3* select stock.pno,pname,company,cname
+SQL> /
+
+View created.
+
+SQL> select * from stock_sales_join_view;
+
+       PNO PNAME      COMPANY    CNAME
+---------- ---------- ---------- ----------
+         2 Printer    Samsung    Yash
+         2 Printer    Samsung    Yash
+
+SQL> desc stock_sales_join_view;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PNO                                       NOT NULL NUMBER(3)
+ PNAME                                              VARCHAR2(10)
+ COMPANY                                            VARCHAR2(10)
+ CNAME                                              VARCHAR2(10)
+
+SQL> create view union_view
+  2  as
+  3  select * from list1
+  4  union
+  5  select * from list2;
+
+View created.
+
+SQL> select * from union_view;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         5 Sevak      Indore
+
+SQL> create table newtable as select *from union_view;
+
+Table created.
+
+SQL> select * from newtable;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Bhopal
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+         5 Sevak      Indore
+
+SQL> desc newtable;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SRNO                                               NUMBER
+ NAME                                               VARCHAR2(10)
+ CITY                                               VARCHAR2(10)
+
+SQL>
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+FACULTY                        TABLE
+STUDENTS                       TABLE
+EMP                            TABLE
+ACCOUNTS                       TABLE
+MEMBERS                        TABLE
+TRANS                          TABLE
+RESULT                         TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+PATIENT                        TABLE
+PRODUCTS                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+ISSUE2                         TABLE
+SALES                          TABLE
+LIST1                          TABLE
+LIST2                          TABLE
+LIST3                          TABLE
+FACULTY_VIEW                   VIEW
+SALARY_VIEW                    VIEW
+STOCK_SALES_JOIN_VIEW          VIEW
+UNION_VIEW                     VIEW
+NEWTABLE                       TABLE
+
+22 rows selected.
+
+SQL> select * from issue2;
+
+no rows selected
+
+SQL> desc issue2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MNO                                                NUMBER(3)
+ BO                                                 NUMBER(3)
+ DOI                                                DATE
+ DOR                                                DATE
+
+SQL> insert into issue2 values(1,2,sysdate,sysdate+2);
+insert into issue2 values(1,2,sysdate,sysdate+2)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (OM.SYS_C004633) violated - parent key not
+found
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+FACULTY                        TABLE
+STUDENTS                       TABLE
+EMP                            TABLE
+ACCOUNTS                       TABLE
+MEMBERS                        TABLE
+TRANS                          TABLE
+RESULT                         TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+PATIENT                        TABLE
+PRODUCTS                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+ISSUE2                         TABLE
+SALES                          TABLE
+LIST1                          TABLE
+LIST2                          TABLE
+LIST3                          TABLE
+FACULTY_VIEW                   VIEW
+SALARY_VIEW                    VIEW
+STOCK_SALES_JOIN_VIEW          VIEW
+UNION_VIEW                     VIEW
+NEWTABLE                       TABLE
+
+22 rows selected.
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> create view v1 as select * from list1;
+
+View created.
+
+SQL> select * from v1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+         3 Rajkumar   Sagar
+
+SQL> drop table list1;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+FACULTY                        TABLE
+STUDENTS                       TABLE
+EMP                            TABLE
+ACCOUNTS                       TABLE
+MEMBERS                        TABLE
+TRANS                          TABLE
+RESULT                         TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+PATIENT                        TABLE
+PRODUCTS                       TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+ISSUE2                         TABLE
+SALES                          TABLE
+LIST2                          TABLE
+LIST3                          TABLE
+FACULTY_VIEW                   VIEW
+SALARY_VIEW                    VIEW
+STOCK_SALES_JOIN_VIEW          VIEW
+UNION_VIEW                     VIEW
+NEWTABLE                       TABLE
+V1                             VIEW
+
+22 rows selected.
+
+SQL> select * from v1;
+select * from v1
+              *
+ERROR at line 1:
+ORA-04063: view "OM.V1" has errors
+
+
+SQL> create table list1(Srno number,name varchar(10), city varchar(10));
+
+Table created.
+
+SQL> select * from v1;
+
+no rows selected
+
+SQL> insert into list1 values(1,'Raja','Sagar');
+
+1 row created.
+
+SQL> select * from v1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+
+SQL> insert into v1 values(2,'Rani','Sagar');
+
+1 row created.
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+
+SQL> drop table list1;
+
+Table dropped.
+
+SQL> select * from v1;
+select * from v1
+              *
+ERROR at line 1:
+ORA-04063: view "OM.V1" has errors
+
+
+SQL> create table list1(rollno number(3), marks1 number(3));
+
+Table created.
+
+SQL> select * from v1;
+select * from v1
+              *
+ERROR at line 1:
+ORA-04063: view "OM.V1" has errors
+
+
+SQL> drop table list1;
+
+Table dropped.
+
+SQL> create table list1(rollno number,sname varchar(10),subject varchar(10));
+
+Table created.
+
+SQL> select * from v1;
+select * from v1
+              *
+ERROR at line 1:
+ORA-04063: view "OM.V1" has errors
+
+
+SQL> drop table list1;
+
+Table dropped.
+
+SQL> create table list1(Srno number,name varchar(10), city varchar(10));
+
+Table created.
+
+SQL> insert into list1 values(1,'Raja','Sagar');
+
+1 row created.
+
+SQL> insert into v1 values(2,'Rani','Sagar');
+
+1 row created.
+
+SQL> select * from v1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+
+SQL> alter table list1 add state varchar(10);
+
+Table altered.
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY       STATE
+---------- ---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+
+SQL> select * from v1;
+
+      SRNO NAME       CITY
+---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Sagar
+
+SQL> update v1 set city='Ujjain' where srno=2;
+
+1 row updated.
+
+SQL> select * from list1;
+
+      SRNO NAME       CITY       STATE
+---------- ---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Ujjain
+
+SQL> create view v2 as select * from list1 with read only;
+
+View created.
+
+SQL> select * from v2;
+
+      SRNO NAME       CITY       STATE
+---------- ---------- ---------- ----------
+         1 Raja       Sagar
+         2 Rani       Ujjain
+
+SQL> update v2 set city='Ujjain' where srno=1;
+update v2 set city='Ujjain' where srno=1
+              *
+ERROR at line 1:
+ORA-01733: virtual column not allowed here
+
+
+SQL> create view v3 as select name from list1;
+
+View created.
+
+SQL> select * from v3;
+
+NAME
+----------
+Raja
+Rani
+
+SQL> update v3 set name='R' where srno=1;
+update v3 set name='R' where srno=1
+                             *
+ERROR at line 1:
+ORA-00904: "SRNO": invalid identifier
+
+
+SQL> update v3 set name='R' where name='Raja';
+
+1 row updated.
+
+SQL> create view v4 as select * from list5;
+create view v4 as select * from list5
+                                *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create force view v4 as select * from list5;
+
+Warning: View created with compilation errors.
+
+SQL> select * from v4;
+select * from v4
+              *
+ERROR at line 1:
+ORA-04063: view "OM.V4" has errors
+
+
+SQL> create table list5 (rollno number);
+
+Table created.
+
+SQL> select * from v4;
+
+no rows selected
+
+SQL> select * from user_view;
+select * from user_view
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from user_views;
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+FACULTY_VIEW                            60
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select "TCD","NAME","DEPT","SALARY","JOIN_DATE" from faculty
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+SALARY_VIEW                            117
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select "TCD","NAME","DEPT","SALARY","JOIN_DATE" from faculty where salary>=20000
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+STOCK_SALES_JOIN_VIEW                   79
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select stock.pno,pname,company,cname
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+from stock,sales
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+where
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+stock.pno=sales.pno
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+UNION_VIEW                              83
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select "SRNO","NAME","CITY" from list1
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+union
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select "SRNO","NAME","CITY" from li
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+V1                                      38
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select "SRNO","NAME","CITY" from list1
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+V2                                      61
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select "SRNO","NAME","CITY","STATE" from list1 with read only
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+V3                                      22
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select name from list1
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+V4                                      27
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+select "ROLLNO" from list5
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+VIEW_NAME                      TEXT_LENGTH
+------------------------------ -----------
+TEXT
+--------------------------------------------------------------------------------
+TYPE_TEXT_LENGTH
+----------------
+TYPE_TEXT
+--------------------------------------------------------------------------------
+OID_TEXT_LENGTH
+---------------
+OID_TEXT
+--------------------------------------------------------------------------------
+VIEW_TYPE_OWNER                VIEW_TYPE
+------------------------------ ------------------------------
+SUPERVIEW_NAME
+------------------------------
+
+
+8 rows selected.
+
+SQL> desc user_views;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ VIEW_NAME                                 NOT NULL VARCHAR2(30)
+ TEXT_LENGTH                                        NUMBER
+ TEXT                                               LONG
+ TYPE_TEXT_LENGTH                                   NUMBER
+ TYPE_TEXT                                          VARCHAR2(4000)
+ OID_TEXT_LENGTH                                    NUMBER
+ OID_TEXT                                           VARCHAR2(4000)
+ VIEW_TYPE_OWNER                                    VARCHAR2(30)
+ VIEW_TYPE                                          VARCHAR2(30)
+ SUPERVIEW_NAME                                     VARCHAR2(30)
+
+SQL> select view_name,text from user_views;
+
+VIEW_NAME
+------------------------------
+TEXT
+--------------------------------------------------------------------------------
+FACULTY_VIEW
+select "TCD","NAME","DEPT","SALARY","JOIN_DATE" from faculty
+
+SALARY_VIEW
+select "TCD","NAME","DEPT","SALARY","JOIN_DATE" from faculty where salary>=20000
+
+STOCK_SALES_JOIN_VIEW
+select stock.pno,pname,company,cname
+from stock,sales
+
+VIEW_NAME
+------------------------------
+TEXT
+--------------------------------------------------------------------------------
+where
+stock.pno=sales.pno
+
+UNION_VIEW
+select "SRNO","NAME","CITY" from list1
+union
+select "SRNO","NAME","CITY" from li
+
+V1
+
+VIEW_NAME
+------------------------------
+TEXT
+--------------------------------------------------------------------------------
+select "SRNO","NAME","CITY" from list1
+
+V2
+select "SRNO","NAME","CITY","STATE" from list1 with read only
+
+V3
+select name from list1
+
+V4
+
+VIEW_NAME
+------------------------------
+TEXT
+--------------------------------------------------------------------------------
+select "ROLLNO" from list5
+
+
+8 rows selected.
+
+SQL>    1 Raja       Sagar
+SQL>          6 Senapati   Gwalior   1 Raja       Sagar
+SQL>          6 Senapati   Gwalior   1 Raja       Sagar
+SQL>          6 Senapati   Gwalior   1 Raja       Sagar
+SQL>          6 Senapati   Gwalior
