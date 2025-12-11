@@ -1,0 +1,646 @@
+		SUBQUERY
+===================================================================
+
+A query within a query is called subquery.
+
+select * from xyz where condition=(select ......)
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Nov 29 08:46:36 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+STOCK                          TABLE
+SALES                          TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+RES2                           TABLE
+
+34 rows selected.
+
+SQL> grant select on emp2 to krishna;
+grant select on emp2 to krishna
+                        *
+ERROR at line 1:
+ORA-01917: user or role 'KRISHNA' does not exist
+
+
+SQL> grant select on emp2 to dev;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: dev
+Enter password:
+Connected.
+SQL> select * from prince.emp2;
+
+     EMPNO     SALARY
+---------- ----------
+       101       2000
+
+SQL> create synonym emp2 for prince.emp2;
+create synonym emp2 for prince.emp2
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> connect
+Enter user-name: system
+Enter password:
+Connected.
+SQL> grant create synonym to dev;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: dev
+Enter password:
+Connected.
+SQL> create synonym emp2 for prince.emp2;
+
+Synonym created.
+
+SQL> select * from emp2;
+
+     EMPNO     SALARY
+---------- ----------
+       101       2000
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEACHERS                       TABLE
+TRAINS                         TABLE
+SALES                          TABLE
+MEMBERS                        TABLE
+RESERVATION                    TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+SALES2                         TABLE
+BOOKS2                         TABLE
+TEST                           TABLE
+RESULT                         TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STUDENTS                       TABLE
+ACCOUNTS                       TABLE
+STOCK                          TABLE
+USERS                          TABLE
+EMP2                           SYNONYM
+
+16 rows selected.
+
+SQL> create  synonym e2 for dev.stock;
+
+Synonym created.
+
+SQL> create  synonym e2 for emp2;
+create  synonym e2 for emp2
+                *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create  synonym e3 for emp2;
+
+Synonym created.
+
+SQL> select * from e3;
+
+     EMPNO     SALARY
+---------- ----------
+       101       2000
+
+SQL> select * from e2;
+
+    PRODNO PNAME      COMPANY
+---------- ---------- ----------
+         1 Monitor    Samsung
+         2 Mouse      Dell
+         3 Keyboard   Logitech
+         4 Printer    HP
+         5 Scanner    Canon
+         6 CPU        AMD
+         7 Phone      Apple
+
+7 rows selected.
+
+SQL> select from faculty;
+select from faculty
+       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select * from customers where cname=(select cname from customers
+  2  where cno=2);
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+
+SQL> select * from customers where cname=(select dept from customers
+  2  where cno=2);
+select * from customers where cname=(select dept from customers
+                              *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select * from customers where cname=(select cname from customers
+  2  where cno=2);
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+
+SQL> select * from customers where cname=(select dept from customers
+  2  where cno=0);
+select * from customers where cname=(select dept from customers
+                              *
+ERROR at line 1:
+ORA-01722: invalid number
+
+
+SQL> select * from customers where cname=(select cname from customers
+  2  where cno=0);
+
+no rows selected
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select * from customers where cname=(select cname from customers
+  2  where dept=10);
+select * from customers where cname=(select cname from customers
+                                     *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select max(amoun) from customers;
+select max(amoun) from customers
+           *
+ERROR at line 1:
+ORA-00904: "AMOUN": invalid identifier
+
+
+SQL> select max(amount) from customers;
+
+MAX(AMOUNT)
+-----------
+        935
+
+SQL> select cname,max(amount) from customers;
+select cname,max(amount) from customers
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select * from customers where amount=(select max(amount) from customers);
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         4 Vijay               935 15-FEB-23                    30 Indore
+
+SQL> select amount from customers order by amount desc limit 2;
+select amount from customers order by amount desc limit 2
+                                                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select amount from customers limit 2;
+select amount from customers limit 2
+                                   *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL>
+SQL> select * from customers where amount=(select max(amount) from customers
+  2  where amount<(select max(amount) From customers));
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+
+SQL> select max(amount) from customers;
+
+MAX(AMOUNT)
+-----------
+        935
+
+SQL> select max(amount) from customers where amount<935;
+
+MAX(AMOUNT)
+-----------
+        715
+
+SQL> select * from customers where amount=715;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+
+SQL> select * from customers where amount=(select max(amount) from customers
+  2  where amount!=(select max(amount) From customers));
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+
+SQL>
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select * from customers where dept=(select dept from customers
+  2  where cname in('Raja','Sumit'));
+select * from customers where dept=(select dept from customers
+                                    *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select dept from customers
+  2  where cname in('Raja','Sumit');
+
+      DEPT
+----------
+        20
+        20
+
+SQL> select * from customers where dept=all(select dept from customers
+  2  where cname in('Raja','Sumit'));
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+
+SQL> select * from customers where dept=(select dept from customers
+  2
+SQL> select * from customers where dept=all(select dept from customers
+  2  where cname in('Raja','Ravi'));
+
+no rows selected
+
+SQL> select * from customers where dept=any(select dept from customers
+  2  where cname in('Raja','Ravi'));
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         5 Sanjay              385 10-APR-20                    10 Indore
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+
+7 rows selected.
+
+SQL> create table football
+  2  (tcd number,
+  3  tname varchar(10),
+  4  scored number,
+  5  against number);
+
+Table created.
+
+SQL> insert into football values(1,'India',10,4);
+
+1 row created.
+
+SQL> insert into football values(2,'Germant',9,6);
+
+1 row created.
+
+SQL> insert into football values(3,'Brazil',12,8);
+
+1 row created.
+
+SQL> insert into football values(4,'Spain',3,10);
+
+1 row created.
+
+SQL> insert into football values(5,'Italy',8,12);
+
+1 row created.
+
+SQL> select * from football;
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         2 Germant             9          6
+         3 Brazil             12          8
+         4 Spain               3         10
+         5 Italy               8         12
+
+SQL> update football set tname='Germany' where tcd=2;
+
+1 row updated.
+
+SQL> select * from football;
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         2 Germany             9          6
+         3 Brazil             12          8
+         4 Spain               3         10
+         5 Italy               8         12
+
+SQL> select against from football where tname='India';
+
+   AGAINST
+----------
+         4
+
+SQL> select tnaame from football where against>4;
+select tnaame from football where against>4
+       *
+ERROR at line 1:
+ORA-00904: "TNAAME": invalid identifier
+
+
+SQL> select tname from football where against>4;
+
+TNAME
+----------
+Germany
+Brazil
+Spain
+Italy
+
+SQL> select tname from football where against>(select against from football
+  2  where tname='India');
+
+TNAME
+----------
+Germany
+Brazil
+Spain
+Italy
+
+SQL> sel
+SP2-0042: unknown command "sel" - rest of line ignored.
+SQL> select * from football where scored>(select scored from football
+  2  where tname='Germany');
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         3 Brazil             12          8
+
+SQL>
+SQL> select tname from football where scored=all(select scored from football
+  2  where tname='Germany' and tname='Italy');
+
+TNAME
+----------
+India
+Germany
+Brazil
+Spain
+Italy
+
+SQL> select * from football;
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         2 Germany             9          6
+         3 Brazil             12          8
+         4 Spain               3         10
+         5 Italy               8         12
+
+SQL> select tname from football where scored>all(select scored from football
+  2  where tname='Germany' and tname='Italy');
+
+TNAME
+----------
+India
+Germany
+Brazil
+Spain
+Italy
+
+SQL> c/and/or
+  2* where tname='Germany' or tname='Italy')
+SQL> /
+
+TNAME
+----------
+India
+Brazil
+
+SQL> select scored from football
+  2  where tname='Germany' and tname='Italy';
+
+no rows selected
+
+SQL> insert into football values(6,'Japan',2,9);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select scored from football
+  2  ;
+
+    SCORED
+----------
+        10
+         9
+        12
+         3
+         8
+         2
+
+6 rows selected.
+
+SQL> select * from football;
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         2 Germany             9          6
+         3 Brazil             12          8
+         4 Spain               3         10
+         5 Italy               8         12
+         6 Japan               2          9
+
+6 rows selected.
+
+SQL> select tname from football where against<
+  2  (select against from football where tname='Brazil' or tname='Spain');
+(select against from football where tname='Brazil' or tname='Spain')
+ *
+ERROR at line 2:
+ORA-01427: single-row subquery returns more than one row
+
+
+SQL> select tname from football where against<all
+  2  (select against from football where tname='Brazil' or tname='Spain');
+
+TNAME
+----------
+India
+Germany
+
+SQL> 1
+  1* select tname from football where against<all
+SQL> c/all/any
+  1* select tname from footbany where against<all
+SQL> /
+select tname from footbany where against<all
+                  *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> c/footbany/football
+  1* select tname from football where against<all
+SQL> /
+
+TNAME
+----------
+India
+Germany
+
+SQL>
+SQL> c/<all/<any
+  1* select tname from football where against<any
+SQL> /
+
+TNAME
+----------
+India
+Germany
+Brazil
+Japan
+
+SQL>
