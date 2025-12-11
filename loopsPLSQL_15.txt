@@ -1,0 +1,582 @@
+
+			Loops in PL/SQL
+=================================================================
+
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Dec 6 08:50:09 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> set serveroutput on
+SQL> ed c:/oracle/loop1.sql
+
+SQL> ed c:/oracle/loop2.sql
+
+SQL> @ c:/oracle/loop2.sql
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop2.sql
+
+SQL> x
+SP2-0042: unknown command "x" - rest of line ignored.
+SQL> ed c:/oracle/loop3.sql
+
+SQL> @ c:/oracle/loop3.sql
+SP2-0552: Bind variable "FOR" not declared.
+SQL> ed c:/oracle/loop3.sql
+
+SQL> @ c:/oracle/loop3.sql
+                a:=a+1;
+                *
+ERROR at line 7:
+ORA-06550: line 7, column 3:
+PLS-00363: expression 'A' cannot be used as an assignment target
+ORA-06550: line 7, column 3:
+PL/SQL: Statement ignored
+
+
+SQL> ed c:/oracle/loop3.sql
+
+SQL> @ c:/oracle/loop3.sql
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop3.sql
+
+SQL> ed c:/oracle/loop4.sql
+
+SQL> @ c:/oracle/loop4.sql
+                a:=a-1;
+                *
+ERROR at line 7:
+ORA-06550: line 7, column 3:
+PLS-00363: expression 'A' cannot be used as an assignment target
+ORA-06550: line 7, column 3:
+PL/SQL: Statement ignored
+
+
+SQL> ed c:/oracle/loop4.sql
+
+SQL> @ c:/oracle/loop4.sql
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop4.sql
+
+SQL> @ c:/oracle/loop3.sql
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop3.sql
+
+SQL> @ c:/oracle/loop4.sql
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop4.sql
+
+SQL> @ c:/oracle/loop4.sql
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop3.sql
+
+SQL> ed c:/oracle/loop4.sql
+
+SQL> @ c:/oracle/loop4.sql
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop4.sql
+
+SQL>
+SQL> create table squares (no number,square number);
+
+Table created.
+
+SQL> ed c:/oracle/loop5.sql
+
+SQL> @c:/oracle/loop5.sql
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from squares;
+
+        NO     SQUARE
+---------- ----------
+         1          1
+         2          4
+         3          9
+         4         16
+         5         25
+         6         36
+         7         49
+         8         64
+         9         81
+        10        100
+
+10 rows selected.
+
+SQL> ed c:/oracle/loop5.sql
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> ed c:/oracle/loop6.sql
+
+SQL> @ c:/oracle/loop6.sql
+Ravi
+Sumit
+Ajay
+Vijay
+Sanjay
+Gourav
+Sourav
+Raja
+Rani
+Gaurav
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop6.sql
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> ed c:/oracle/loop7.sql
+
+SQL> @ c:/oracle/loop7.sql
+Enter value for cno: 1
+old   6:        cno:=&cno;
+new   6:        cno:=1;
+declare
+*
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows
+ORA-06512: at line 7
+
+
+SQL> ed c:/oracle/loop7.sql
+
+SQL> @ c:/oracle/loop7.sql
+Enter value for cid: 1
+old   6:        cid:=&cid;
+new   6:        cid:=1;
+Ravi
+Indore
+
+PL/SQL procedure successfully completed.
+
+SQL> @ c:/oracle/loop7.sql
+Enter value for cid: 2
+old   6:        cid:=&cid;
+new   6:        cid:=2;
+Sumit
+Sagar
+
+PL/SQL procedure successfully completed.
+
+SQL> @ c:/oracle/loop7.sql
+Enter value for cid: 3
+old   6:        cid:=&cid;
+new   6:        cid:=3;
+Ajay
+Sagar
+
+PL/SQL procedure successfully completed.
+
+SQL> @ c:/oracle/loop7.sql
+Enter value for cid: 4
+old   6:        cid:=&cid;
+new   6:        cid:=4;
+Vijay
+Indore
+
+PL/SQL procedure successfully completed.
+
+SQL> 4
+  4*    town varchar(6);
+SQL> @ c:/oracle/loop7.sql
+Enter value for cid: 5
+old   6:        cid:=&cid;
+new   6:        cid:=5;
+declare
+*
+ERROR at line 1:
+ORA-06502: PL/SQL: numeric or value error: character string buffer too small
+ORA-06512: at line 7
+
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> ed c:/oracle/loop7.sql
+
+SQL> @ c:/oracle/loop7.sql
+Enter value for cid: 5
+old   6:        cid:=&cid;
+new   6:        cid:=5;
+Sanjay
+Indore
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop7.sql
+
+SQL> @ c:/oracle/loop7.sql
+Enter value for cid: 6
+old   6:        cid:=&cid;
+new   6:        cid:=6;
+        select cname,city,dept into name,town from customers where cno=cid;
+                                              *
+ERROR at line 7:
+ORA-06550: line 7, column 40:
+PL/SQL: ORA-00947: not enough values
+ORA-06550: line 7, column 2:
+PL/SQL: SQL Statement ignored
+
+
+SQL> ed c:/oracle/loop7.sql
+
+SQL> ed c:/oracle/loop8.sql
+
+SQL> @ c:/oracle/loop8.sql
+Enter value for cid: 5
+old   5:        cid:=&cid;
+new   5:        cid:=5;
+        select * from customers into custdata where cno=cid;
+                                *
+ERROR at line 6:
+ORA-06550: line 6, column 26:
+PL/SQL: ORA-00933: SQL command not properly ended
+ORA-06550: line 6, column 2:
+PL/SQL: SQL Statement ignored
+
+
+SQL> ed c:/oracle/loop8.sql
+
+SQL> ed c:/oracle/loop8.sql
+
+SQL> ed c:/oracle/loop87sql
+
+SQL> ed c:/oracle/loop7sql
+
+SQL> ed c:/oracle/loop7.sql
+
+SQL> ed c:/oracle/loop8.sql
+
+SQL> @ c:/oracle/loop8.sql
+Enter value for cid: 5
+old   5:        cid:=&cid;
+new   5:        cid:=5;
+        dbms_output.put_line('Name ' || custdate.cname);
+                                        *
+ERROR at line 7:
+ORA-06550: line 7, column 34:
+PLS-00201: identifier 'CUSTDATE.CNAME' must be declared
+ORA-06550: line 7, column 2:
+PL/SQL: Statement ignored
+ORA-06550: line 8, column 34:
+PLS-00201: identifier 'CUSTDATE.CITY' must be declared
+ORA-06550: line 8, column 2:
+PL/SQL: Statement ignored
+ORA-06550: line 9, column 40:
+PLS-00201: identifier 'CUSTDATE.DEPT' must be declared
+ORA-06550: line 9, column 2:
+PL/SQL: Statement ignored
+
+
+SQL> ed c:/oracle/loop8.sql
+
+SQL> @ c:/oracle/loop8.sql
+Enter value for cid: 6
+old   5:        cid:=&cid;
+new   5:        cid:=6;
+Name Gourav
+City Sagar
+Department 20
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop8.sql
+
+SQL> @ c:/oracle/loop8.sql
+Enter value for cid: 6
+old   5:        cid:=&cid;
+new   5:        cid:=6;
+        cid c.cno%type;
+            *
+ERROR at line 2:
+ORA-06550: line 2, column 6:
+PLS-00201: identifier 'C.CNO' must be declared
+ORA-06550: line 2, column 6:
+PL/SQL: Item ignored
+ORA-06550: line 3, column 11:
+PLS-00201: identifier 'C' must be declared
+ORA-06550: line 3, column 11:
+PL/SQL: Item ignored
+ORA-06550: line 5, column 2:
+PLS-00320: the declaration of the type of this expression is incomplete or
+malformed
+ORA-06550: line 5, column 2:
+PL/SQL: Statement ignored
+ORA-06550: line 6, column 53:
+PLS-00320: the declaration of the type of this expression is incomplete or
+malformed
+ORA-06550: line 6, column 53:
+PL/SQL: ORA-00904: "CID": invalid identifier
+ORA-06550: line 6, column 2:
+PL/SQL: SQL Statement ignored
+ORA-06550: line 7, column 34:
+PLS-00320: the declaration of the type of this expression is incomplete or
+malformed
+ORA-06550: line 7, column 2:
+PL/SQL: Statement ignored
+ORA-06550: line 8, column 34:
+PLS-00320: the declaration of the type of this expression is incomplete or
+malformed
+ORA-06550: line 8, column 2:
+PL/SQL: Statement ignored
+ORA-06550: line
+
+
+SQL> ed c:/oracle/loop8.sql
+
+SQL> ed c:/oracle/loop9.sql
+
+SQL> @ c:/oracle/loop8.sql
+Enter value for cid: 3
+old   5:        cid:=&cid;
+new   5:        cid:=3;
+Name Ajay
+City Sagar
+Department 10
+
+PL/SQL procedure successfully completed.
+
+SQL> @ c:/oracle/loop9.sql
+Enter value for cid: 3
+old   5:        cid:=&cid;
+new   5:        cid:=3;
+Enter value for phone: 987
+old   9:                phone:=&phone;
+new   9:                phone:=987;
+Phone No Updated!!
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22        987         10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> @ c:/oracle/loop9.sql
+Enter value for cid: 1
+old   5:        cid:=&cid;
+new   5:        cid:=1;
+Enter value for phone: 374
+old   9:                phone:=&phone;
+new   9:                phone:=374;
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22        987         10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> ed c:/oracle/loop9.sql
+
+SQL> @ c:/oracle/loop9.sql
+Enter value for cid: 1
+old   5:        cid:=&cid;
+new   5:        cid:=1;
+Enter value for phone: 11
+old   9:                phone:=&phone;
+new   9:                phone:=11;
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22        987         10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> ed c:/oracle/loop9.sql
+
+SQL> @ c:/oracle/loop9.sql
+Enter value for cid: 1
+old   5:        cid:=&cid;
+new   5:        cid:=1;
+Enter value for phone: 1
+old  10:                phone:=&phone;
+new  10:                phone:=1;
+        dbms.output.put_line('Current phone no ' || phone);
+        *
+ERROR at line 7:
+ORA-06550: line 7, column 2:
+PLS-00201: identifier 'DBMS.OUTPUT' must be declared
+ORA-06550: line 7, column 2:
+PL/SQL: Statement ignored
+
+
+SQL> ed c:/oracle/loop9.sql
+
+SQL> @ c:/oracle/loop9.sql
+Enter value for cid: 1
+old   5:        cid:=&cid;
+new   5:        cid:=1;
+Enter value for phone: 1
+old   9:                phone:=&phone;
+new   9:                phone:=1;
+Contact no already exists
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/loop9.sql
+
+SQL> @ c:/oracle/loop9.sql
+Enter value for cid: 5
+old   5:        cid:=&cid;
+new   5:        cid:=5;
+Enter value for phone: 55
+old   9:                phone:=&phone;
+new   9:                phone:=55;
+Enter value for cid: 11
+old  14:                cid=&cid;
+new  14:                cid=11;
+                cid=11;
+                   *
+ERROR at line 14:
+ORA-06550: line 14, column 6:
+PLS-00103: Encountered the symbol "=" when expecting one of the following:
+:= . ( @ % ;
+The symbol ":= was inserted before "=" to continue.
+
+
+SQL> ed c:/oracle/loop9.sql
