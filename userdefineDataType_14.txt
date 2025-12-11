@@ -1,0 +1,543 @@
+
+	name	add	cont
+
+	name	add	cont
+
+	User Defined Data Type 
+
+
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Dec 2 08:46:31 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+STOCK                          TABLE
+SALES                          TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+RES2                           TABLE
+FOOTBALL                       TABLE
+
+35 rows selected.
+
+SQL> create type address_ty as object
+  2  (city varchar(10),
+  3  state varchar(10),
+  4  pin number);
+  5  /
+
+Type created.
+
+SQL> create table doctors(docid number, name varchar(10),
+  2  docadd address_ty);
+
+Table created.
+
+SQL> desc address_ty;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CITY                                               VARCHAR2(10)
+ STATE                                              VARCHAR2(10)
+ PIN                                                NUMBER
+
+SQL> desc doctors;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DOCID                                              NUMBER
+ NAME                                               VARCHAR2(10)
+ DOCADD                                             ADDRESS_TY
+
+SQL> create table patients(patid number,pataddress address_Ty);
+
+Table created.
+
+SQL> insert into doctors values(1,'A','Sagar','MP',45);
+insert into doctors values(1,'A','Sagar','MP',45)
+            *
+ERROR at line 1:
+ORA-00913: too many values
+
+
+SQL> insert into doctors values(1,'A',address_ty('Sagar','MP',470001));
+
+1 row created.
+
+SQL> insert into doctors values(2,'B',address_ty('Lucknow','UP',349482));
+
+1 row created.
+
+SQL> select * from doctors;
+
+     DOCID NAME
+---------- ----------
+DOCADD(CITY, STATE, PIN)
+--------------------------------------------------------------------------------
+         1 A
+ADDRESS_TY('Sagar', 'MP', 470001)
+
+         2 B
+ADDRESS_TY('Lucknow', 'UP', 349482)
+
+
+SQL> desc patients;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PATID                                              NUMBER
+ PATADDRESS                                         ADDRESS_TY
+
+SQL> insert into patients values(101,address_ty('Indore','MP',3944));
+
+1 row created.
+
+SQL> select * from patients;
+
+     PATID
+----------
+PATADDRESS(CITY, STATE, PIN)
+--------------------------------------------------------------------------------
+       101
+ADDRESS_TY('Indore', 'MP', 3944)
+
+
+SQL> select * from doctors;
+
+     DOCID NAME
+---------- ----------
+DOCADD(CITY, STATE, PIN)
+--------------------------------------------------------------------------------
+         1 A
+ADDRESS_TY('Sagar', 'MP', 470001)
+
+         2 B
+ADDRESS_TY('Lucknow', 'UP', 349482)
+
+
+SQL> create type dept_ty as object
+  2  (dname varchar(10),
+  3  location varchar(10),
+  4  manager varchar(10));
+  5  /
+
+Type created.
+
+SQL> create table developers(devid number(3),name varchar(10),
+  2  department dept_ty);
+
+Table created.
+
+SQL> insert into developers values(1,'Ayush',dept_ty('IT','Chennai','Swami'));
+
+1 row created.
+
+SQL> insert into developers values(2,'Veer',dept_ty('IT','Bengaluru','M'));
+
+1 row created.
+
+SQL> insert into developers values(3,'Krishna',dept_ty('Wildlife','Gujarat','SherSingh'));
+
+1 row created.
+
+SQL> insert into developers values(4,'Rajendra',dept_ty('Sports','Mumbai','Rohit'));
+
+1 row created.
+
+SQL> insert into developers values(5,'Abhay',dept_ty('Finance','Hyderabad','Sitharaman'));
+
+1 row created.
+
+SQL> insert into developers values(6,'Rahul',dept_ty('Athletics','Pune','Bolt'));
+
+1 row created.
+
+SQL> select * from developers;
+
+     DEVID NAME
+---------- ----------
+DEPARTMENT(DNAME, LOCATION, MANAGER)
+--------------------------------------------------------------------------------
+         1 Ayush
+DEPT_TY('IT', 'Chennai', 'Swami')
+
+         2 Veer
+DEPT_TY('IT', 'Bengaluru', 'M')
+
+         3 Krishna
+DEPT_TY('Wildlife', 'Gujarat', 'SherSingh')
+
+
+     DEVID NAME
+---------- ----------
+DEPARTMENT(DNAME, LOCATION, MANAGER)
+--------------------------------------------------------------------------------
+         4 Rajendra
+DEPT_TY('Sports', 'Mumbai', 'Rohit')
+
+         5 Abhay
+DEPT_TY('Finance', 'Hyderabad', 'Sitharaman')
+
+         6 Rahul
+DEPT_TY('Athletics', 'Pune', 'Bolt')
+
+
+6 rows selected.
+
+SQL> select * from developers where dept_ty.location='Mumbai';
+select * from developers where dept_ty.location='Mumbai'
+                               *
+ERROR at line 1:
+ORA-00904: "DEPT_TY"."LOCATION": invalid identifier
+
+
+SQL> select * from developers where deptartment.location='Mumbai';
+select * from developers where deptartment.location='Mumbai'
+                               *
+ERROR at line 1:
+ORA-00904: "DEPTARTMENT"."LOCATION": invalid identifier
+
+
+SQL> select * from developers where department.location='Mumbai';
+select * from developers where department.location='Mumbai'
+                               *
+ERROR at line 1:
+ORA-00904: "DEPARTMENT"."LOCATION": invalid identifier
+
+
+SQL> desc developers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEVID                                              NUMBER(3)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         DEPT_TY
+
+SQL> desc dept_ty;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DNAME                                              VARCHAR2(10)
+ LOCATION                                           VARCHAR2(10)
+ MANAGER                                            VARCHAR2(10)
+
+SQL> select * from developers where department=(Select * from dept_ty where location='Mumbai'));
+select * from developers where department=(Select * from dept_ty where location='Mumbai'))
+                                                                                         *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from developers where department=(Select * from dept_ty where location='Mumbai');
+select * from developers where department=(Select * from dept_ty where location='Mumbai')
+                                                         *
+ERROR at line 1:
+ORA-04044: procedure, function, package, or type is not allowed here
+
+
+SQL> select * from developers where department d
+  2  where
+  3  d.department.location='Mumbai';
+select * from developers where department d
+                                          *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> select * from developers d where
+  2  d.department.location='Mumbai';
+
+     DEVID NAME
+---------- ----------
+DEPARTMENT(DNAME, LOCATION, MANAGER)
+--------------------------------------------------------------------------------
+         4 Rajendra
+DEPT_TY('Sports', 'Mumbai', 'Rohit')
+
+
+SQL> select * from developers where
+  2  developers.department.location='Mumbai';
+developers.department.location='Mumbai'
+*
+ERROR at line 2:
+ORA-00904: "DEVELOPERS"."DEPARTMENT"."LOCATION": invalid identifier
+
+
+SQL> select * from developers d where
+  2  d.department.location='Mumbai';
+
+     DEVID NAME
+---------- ----------
+DEPARTMENT(DNAME, LOCATION, MANAGER)
+--------------------------------------------------------------------------------
+         4 Rajendra
+DEPT_TY('Sports', 'Mumbai', 'Rohit')
+
+
+SQL> update developers d set d.department.location='Nashik'
+  2  where devid=4;
+
+1 row updated.
+
+SQL> select * from developers;
+
+     DEVID NAME
+---------- ----------
+DEPARTMENT(DNAME, LOCATION, MANAGER)
+--------------------------------------------------------------------------------
+         1 Ayush
+DEPT_TY('IT', 'Chennai', 'Swami')
+
+         2 Veer
+DEPT_TY('IT', 'Bengaluru', 'M')
+
+         3 Krishna
+DEPT_TY('Wildlife', 'Gujarat', 'SherSingh')
+
+
+     DEVID NAME
+---------- ----------
+DEPARTMENT(DNAME, LOCATION, MANAGER)
+--------------------------------------------------------------------------------
+         4 Rajendra
+DEPT_TY('Sports', 'Nashik', 'Rohit')
+
+         5 Abhay
+DEPT_TY('Finance', 'Hyderabad', 'Sitharaman')
+
+         6 Rahul
+DEPT_TY('Athletics', 'Pune', 'Bolt')
+
+
+6 rows selected.
+
+SQL> select * from patients;
+
+     PATID
+----------
+PATADDRESS(CITY, STATE, PIN)
+--------------------------------------------------------------------------------
+       101
+ADDRESS_TY('Indore', 'MP', 3944)
+
+
+SQL> insert into patients values(102,address_ty('Sagar','MP',595);
+insert into patients values(102,address_ty('Sagar','MP',595)
+                                                           *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> insert into patients values(102,address_ty('Sagar','MP',595));
+
+1 row created.
+
+SQL> insert into patients values(103,address_ty('Agra','UP',5448));
+
+1 row created.
+
+SQL> select * from patients;
+
+     PATID
+----------
+PATADDRESS(CITY, STATE, PIN)
+--------------------------------------------------------------------------------
+       101
+ADDRESS_TY('Indore', 'MP', 3944)
+
+       102
+ADDRESS_TY('Sagar', 'MP', 595)
+
+       103
+ADDRESS_TY('Agra', 'UP', 5448)
+
+
+SQL> select * from patients p
+  2  where
+  3  p.pataddress.city='Indore';
+
+     PATID
+----------
+PATADDRESS(CITY, STATE, PIN)
+--------------------------------------------------------------------------------
+       101
+ADDRESS_TY('Indore', 'MP', 3944)
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+DOCTORS                        TABLE
+PATIENTS                       TABLE
+DEVELOPERS                     TABLE
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+ACCOUNTS                       TABLE
+EMP                            TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CITIES                         TABLE
+STOCK                          TABLE
+SALES                          TABLE
+RES2                           TABLE
+FOOTBALL                       TABLE
+
+38 rows selected.
+
+SQL> select * from user_types;
+
+TYPE_NAME                      TYPE_OID
+------------------------------ --------------------------------
+TYPECODE                       ATTRIBUTES    METHODS PRE INC FIN INS
+------------------------------ ---------- ---------- --- --- --- ---
+SUPERTYPE_OWNER                SUPERTYPE_NAME                 LOCAL_ATTRIBUTES
+------------------------------ ------------------------------ ----------------
+LOCAL_METHODS TYPEID
+------------- --------------------------------
+ADDRESS_TY                     D5B51BFA696540679AFDCC98D84587C5
+OBJECT                                  3          0 NO  NO  YES YES
+
+
+
+
+TYPE_NAME                      TYPE_OID
+------------------------------ --------------------------------
+TYPECODE                       ATTRIBUTES    METHODS PRE INC FIN INS
+------------------------------ ---------- ---------- --- --- --- ---
+SUPERTYPE_OWNER                SUPERTYPE_NAME                 LOCAL_ATTRIBUTES
+------------------------------ ------------------------------ ----------------
+LOCAL_METHODS TYPEID
+------------- --------------------------------
+DEPT_TY                        1B84BC60375240AAAD0D306FB9E96046
+OBJECT                                  3          0 NO  NO  YES YES
+
+
+
+
+SQL> desc user_types;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TYPE_NAME                                 NOT NULL VARCHAR2(30)
+ TYPE_OID                                  NOT NULL RAW(16)
+ TYPECODE                                           VARCHAR2(30)
+ ATTRIBUTES                                         NUMBER
+ METHODS                                            NUMBER
+ PREDEFINED                                         VARCHAR2(3)
+ INCOMPLETE                                         VARCHAR2(3)
+ FINAL                                              VARCHAR2(3)
+ INSTANTIABLE                                       VARCHAR2(3)
+ SUPERTYPE_OWNER                                    VARCHAR2(30)
+ SUPERTYPE_NAME                                     VARCHAR2(30)
+ LOCAL_ATTRIBUTES                                   NUMBER
+ LOCAL_METHODS                                      NUMBER
+ TYPEID                                             RAW(16)
+
+SQL> select type_nam,attributes from user_types;
+select type_nam,attributes from user_types
+       *
+ERROR at line 1:
+ORA-00904: "TYPE_NAM": invalid identifier
+
+
+SQL> select type_name,attributes from user_types;
+
+TYPE_NAME                      ATTRIBUTES
+------------------------------ ----------
+ADDRESS_TY                              3
+DEPT_TY                                 3
+
+SQL> select type_name,attributes,type_code from user_types;
+select type_name,attributes,type_code from user_types
+                            *
+ERROR at line 1:
+ORA-00904: "TYPE_CODE": invalid identifier
+
+
+SQL> select type_name,attributes,typecode from user_types;
+
+TYPE_NAME                      ATTRIBUTES TYPECODE
+------------------------------ ---------- ------------------------------
+ADDRESS_TY                              3 OBJECT
+DEPT_TY                                 3 OBJECT
+
+SQL> update developers d set d.department.location='Nashik'
+  2  ;
+
+6 rows updated.
+
+SQL>
