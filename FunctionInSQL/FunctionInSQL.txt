@@ -1,0 +1,558 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Thu Dec 18 08:34:55 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> set serveroutput on
+SQL> ed c:/oracle/fun1.sql
+
+SQL> @ c:/oracle/fun1.sql
+
+Function created.
+
+SQL> ed c:/oracle/fun1.sql
+
+SQL> ed c:/oracle/fun1.sql
+
+SQL> select fun1(6) from dual;
+
+   FUN1(6)
+----------
+        36
+
+SQL> ed c:/oracle/fun1call.sql
+
+SQL> @ c:/oracle/fun1call.sql
+49
+
+PL/SQL procedure successfully completed.
+
+SQL> ed c:/oracle/fun1call.sql
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> ed c:/oracle/fun1.sql
+
+SQL> select fun1(4) from dual;
+
+   FUN1(4)
+----------
+        16
+
+SQL> desc dual;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DUMMY                                              VARCHAR2(1)
+
+SQL> select fun1(4) from customers;
+
+   FUN1(4)
+----------
+        16
+        16
+        16
+        16
+        16
+        16
+        16
+        16
+        16
+        16
+
+10 rows selected.
+
+SQL> select fun1(4) from dual;
+
+   FUN1(4)
+----------
+        16
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select * from  trains;
+
+       TNO NAME       SOURCE     DESTINATIO
+---------- ---------- ---------- ----------
+      1001 A Exp.     Delhi      Mumbai
+      1002 B Exp.     Delhi      Hyderabad
+      1003 C Exp.     Indore     Pune
+
+SQL> select * from football;
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         2 Germany             9          6
+         3 Brazil             12          8
+         4 Spain               3         10
+         5 Italy               8         12
+         6 Japan               2          9
+
+6 rows selected.
+
+SQL> select * from empl;
+
+     EMPID EMPNAME        DEPTID     SALARY
+---------- ---------- ---------- ----------
+       101 A                  10      40000
+       102 B                  10      60000
+       103 C                  20      20000
+       104 D                  30      15000
+
+SQL> select * from employee;
+select * from employee
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from employees;
+
+no rows selected
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> ed c:/oracle/fun2.sql
+
+SQL> select add_months(doj,12*5) from customers;
+
+ADD_MONTH
+---------
+10-APR-25
+13-APR-25
+30-SEP-27
+15-FEB-28
+10-APR-25
+03-NOV-30
+06-NOV-30
+04-OCT-30
+16-MAY-28
+15-NOV-30
+
+10 rows selected.
+
+SQL> ed c:/oracle/fun2.sql
+
+SQL> @ c:/oracle/fun2.sql
+
+Function created.
+
+SQL> select fun2(1,10) from dual;
+
+FUN2(1,10
+---------
+10-APR-30
+
+SQL> ed c:/oracle/fun2.sql
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select between_days(doj,sysdate) from customers;
+select between_days(doj,sysdate) from customers
+       *
+ERROR at line 1:
+ORA-00904: "BETWEEN_DAYS": invalid identifier
+
+
+SQL> select days_between(doj,sysdate) from customers;
+select days_between(doj,sysdate) from customers
+       *
+ERROR at line 1:
+ORA-00904: "DAYS_BETWEEN": invalid identifier
+
+
+SQL> select sysdate-doj from customers;
+
+SYSDATE-DOJ
+-----------
+ 2078.37802
+ 2075.37802
+ 1175.37802
+ 1037.37802
+ 2078.37802
+ 44.9550694
+ 42.3780208
+ 75.3780208
+ 947.378021
+  33.001331
+
+10 rows selected.
+
+SQL> select doj,sysdate-doj from customers;
+
+DOJ       SYSDATE-DOJ
+--------- -----------
+10-APR-20  2078.37823
+13-APR-20  2075.37823
+30-SEP-22  1175.37823
+15-FEB-23  1037.37823
+10-APR-20  2078.37823
+03-NOV-25  44.9552778
+06-NOV-25  42.3782292
+04-OCT-25  75.3782292
+16-MAY-23  947.378229
+15-NOV-25  33.0015394
+
+10 rows selected.
+
+SQL> select round(sysdate-doj) from customers;
+
+ROUND(SYSDATE-DOJ)
+------------------
+              2078
+              2075
+              1175
+              1037
+              2078
+                45
+                42
+                75
+               947
+                33
+
+10 rows selected.
+
+SQL> select round(sysdate-doj,2) from customers;
+
+ROUND(SYSDATE-DOJ,2)
+--------------------
+             2078.38
+             2075.38
+             1175.38
+             1037.38
+             2078.38
+               44.96
+               42.38
+               75.38
+              947.38
+                  33
+
+10 rows selected.
+
+SQL> ed c:/oracle/fun2.sql
+
+SQL> ed c:/oracle/fun3.sql
+
+SQL> @ c:/oracle/fun3.sql
+
+Function created.
+
+SQL> select fun3(10) from dual;
+
+  FUN3(10)
+----------
+      3652
+
+SQL> select 3652/120 from dual;
+
+  3652/120
+----------
+30.4333333
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select add_months(doj,120) from customers where cno=10;
+
+ADD_MONTH
+---------
+15-NOV-35
+
+SQL> select add_months(doj,120)-doj from customers where cno=10;
+
+ADD_MONTHS(DOJ,120)-DOJ
+-----------------------
+                   3652
+
+SQL> select add_months(doj,120) from customers where cno=;
+select add_months(doj,120) from customers where cno=
+                                                   *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select add_months(doj,120) from customers where cno=7;
+
+ADD_MONTH
+---------
+06-NOV-35
+
+SQL> select add_months(doj,120)-doj from customers where cno=7;
+
+ADD_MONTHS(DOJ,120)-DOJ
+-----------------------
+                   3652
+
+SQL> select fun3(7) from dual;
+
+   FUN3(7)
+----------
+      3652
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> @ c:/oracle/p4.sql
+
+Function created.
+
+SQL> select * from customers;
+
+       CNO CNAME            AMOUNT DOJ          CONTACT       DEPT CITY
+---------- ------------ ---------- --------- ---------- ---------- ----------
+         1 Ravi                495 10-APR-20       9983         10 Indore
+         2 Sumit               715 13-APR-20       8832         20 Sagar
+         3 Ajay                165 30-SEP-22                    10 Sagar
+         4 Vijay               935 15-FEB-23                    30 Indore
+         5 Sanjay              385 10-APR-20                    10 Indore
+         6 Gourav               55 03-NOV-25                    20 Sagar
+         7 Sourav              120 06-NOV-25                    10 Sagar
+         8 Raja                230 04-OCT-25                    20 Bhopal
+         9 Rani                260 16-MAY-23                    30 Bhopal
+        10 Gaurav              300 15-NOV-25       3394         40 Gwalior
+
+10 rows selected.
+
+SQL> select fun4(10) from dual;
+select fun4(10) from dual
+       *
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows
+ORA-06512: at "PRINCE.FUN4", line 6
+
+
+SQL> select fun4(20) from dual;
+
+FUN4(20)
+--------------------------------------------------------------------------------
+Sumit
+
+SQL> select fun4(30) from dual;
+
+FUN4(30)
+--------------------------------------------------------------------------------
+Vijay
+
+SQL> @ c:/oracle/p4.sql
+
+Function created.
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> @ c:/oracle/p4.sql
+
+Function created.
+
+SQL> select fun4(10) from dual;
+select fun4(10) from dual
+       *
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows
+ORA-06512: at "PRINCE.FUN4", line 6
+
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> select cname into nm from customers where doj=all(select min(doj) from
+  2  customers where dept=20);
+select cname into nm from customers where doj=all(select min(doj) from
+                  *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> select cname from customers where doj=all(select min(doj) from
+  2  customers where dept=20);
+
+CNAME
+------------
+Sumit
+
+SQL> select min(doj) from
+  2  customers where dept=20;
+
+MIN(DOJ)
+---------
+13-APR-20
+
+SQL> select min(doj) from
+  2  customers where dept=10;
+
+MIN(DOJ)
+---------
+10-APR-20
+
+SQL> select cname from customers where doj='10-Apr-2020';
+
+CNAME
+------------
+Ravi
+Sanjay
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> select rownum from customers;
+
+    ROWNUM
+----------
+         1
+         2
+         3
+         4
+         5
+         6
+         7
+         8
+         9
+        10
+
+10 rows selected.
+
+SQL> select rownum,source from trains;
+
+    ROWNUM SOURCE
+---------- ----------
+         1 Delhi
+         2 Delhi
+         3 Indore
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> select rownum,cname from customers where dept=10;
+
+    ROWNUM CNAME
+---------- ------------
+         1 Ravi
+         2 Ajay
+         3 Sanjay
+         4 Sourav
+
+SQL> select rownum,cname from customers where dept=30;
+
+    ROWNUM CNAME
+---------- ------------
+         1 Vijay
+         2 Rani
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> select * from customers fetch first 1 rows only;
+select * from customers fetch first 1 rows only
+                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from customers limit 2;
+select * from customers limit 2
+                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> @ c:/oracle/p4.sql
+
+Function created.
+
+SQL> select fun4(10) from dual;
+select fun4(10) from dual
+       *
+ERROR at line 1:
+ORA-01422: exact fetch returns more than requested number of rows
+ORA-06512: at "PRINCE.FUN4", line 6
+
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> @ c:/oracle/p4.sql
+
+Function created.
+
+SQL> select fun4(10) from dual;
+
+FUN4(10)
+--------------------------------------------------------------------------------
+Ravi
+
+SQL> ed c:/oracle/p4.sql
+
+SQL> ed c:/oracle/p4.sql
