@@ -1,0 +1,764 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Sat Dec 27 08:36:32 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> conct
+SP2-0042: unknown command "conct" - rest of line ignored.
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> ed c:/oracle/trig21
+
+SQL> @ c:/oracle/trig21
+create or replace trigger trig21 instead of insert on emp1 for each row
+                                                      *
+ERROR at line 1:
+ORA-25002: cannot create INSTEAD OF triggers on tables
+
+
+SQL> create view empview as select * from emp1;
+
+View created.
+
+SQL> select * from empview;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+
+SQL> ed c:/oracle/trig21
+
+SQL> @ c:/oracle/trig21
+
+Trigger created.
+
+SQL> ed c:/oracle/trig21
+
+SQL> insert into emp1 values(2,'B',5000);
+
+1 row created.
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+         2 B                5000
+
+SQL> insert into empview values(3,'B',5000);
+
+1 row created.
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+         2 B                5000
+
+SQL> select * from empview;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+         2 B                5000
+
+SQL> ed c:/oracle/trig21
+
+SQL> create table stockinhand(itemcd int,qty int);
+
+Table created.
+
+SQL>
+SQL> insert into stockinhand(1,50);
+insert into stockinhand(1,50)
+                        *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into stockinhand values(1,50);
+
+1 row created.
+
+SQL> insert into stockinhand values(2,30);
+
+1 row created.
+
+SQL> insert into stockinhand values(3,10);
+
+1 row created.
+
+SQL> insert into stockinhand values(4,1);
+
+1 row created.
+
+SQL> insert into stockinhand values(5,0);
+
+1 row created.
+
+SQL> select * from stockinhand;
+
+    ITEMCD        QTY
+---------- ----------
+         1         50
+         2         30
+         3         10
+         4          1
+         5          0
+
+SQL> ed c:/oracle/trig22
+
+SQL> @ c:/oracle/trig22
+
+Trigger created.
+
+SQL> delete from stockinhand where itemcd=1;
+
+1 row deleted.
+
+SQL> set serveroutput on
+SQL> delete from stockinhand where itemcd=2;
+Qty still in stock, can not delete
+
+1 row deleted.
+
+SQL> select * from stockinhand;
+
+    ITEMCD        QTY
+---------- ----------
+         3         10
+         4          1
+         5          0
+
+SQL> ed c:/oracle/trig22
+
+SQL> drop trigger trigg22;
+drop trigger trigg22
+*
+ERROR at line 1:
+ORA-04080: trigger 'TRIGG22' does not exist
+
+
+SQL> drop trigger trig22;
+
+Trigger dropped.
+
+SQL> ed c:/oracle/trig22
+
+SQL> create view stockview as select * from stockinhand;
+
+View created.
+
+SQL> @ c:/oracle/trig22
+create or replace trigger trig22 before delete on stockview for each row
+                          *
+ERROR at line 1:
+ORA-25001: cannot create this trigger type on views
+
+
+SQL> ed c:/oracle/trig22
+
+SQL> @ c:/oracle/trig22
+
+Trigger created.
+
+SQL> select * from stockview;
+
+    ITEMCD        QTY
+---------- ----------
+         3         10
+         4          1
+         5          0
+
+SQL> delete from stockview where itemcd=3;
+Qty still in stock, can not delete
+
+1 row deleted.
+
+SQL> select * from stockinhand;
+
+    ITEMCD        QTY
+---------- ----------
+         3         10
+         4          1
+         5          0
+
+SQL> delete from stockview where itemcd=5;
+
+1 row deleted.
+
+SQL> select * from stockinhand;
+
+    ITEMCD        QTY
+---------- ----------
+         3         10
+         4          1
+         5          0
+
+SQL> ed c:/oracle/trig22
+
+SQL> @ c:/oracle/trig22
+
+Trigger created.
+
+SQL> delete from stockinhand where itemcd=3;
+
+1 row deleted.
+
+SQL> delete from stockview where itemcd=4;
+Qty still in stock, can not delete
+
+1 row deleted.
+
+SQL> delete from stockview where itemcd=0;
+
+0 rows deleted.
+
+SQL> delete from stockview where itemcd=1;
+
+0 rows deleted.
+
+SQL> delete from stockview where itemcd=5;
+Qty 0, product deleted
+
+1 row deleted.
+
+SQL> select * from stockinhand;
+
+    ITEMCD        QTY
+---------- ----------
+         4          1
+
+SQL> ed c:/oracle/trig22
+
+SQL> ed c:/oracle/trig22
+
+SQL> grant create view to rahul;
+grant create view to rahul
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges
+
+
+SQL> create table course_master
+  2  (ccd number,cname varchar(10),total_seats number,rem_seats number);
+
+Table created.
+
+SQL> insert into course_master values
+  2  (1,'CS',60,60);
+
+1 row created.
+
+SQL> insert into course_master values
+  2  (1,'AI',40,40);
+
+1 row created.
+
+SQL> insert into course_master values
+  2  (3,'Mech',30,30);
+
+1 row created.
+
+SQL> select * from course_master;
+
+       CCD CNAME      TOTAL_SEATS  REM_SEATS
+---------- ---------- ----------- ----------
+         1 CS                  60         60
+         1 AI                  40         40
+         3 Mech                30         30
+
+SQL> update course_master set ccd=2 where cname='AI';
+
+1 row updated.
+
+SQL> select * from course_master;
+
+       CCD CNAME      TOTAL_SEATS  REM_SEATS
+---------- ---------- ----------- ----------
+         1 CS                  60         60
+         2 AI                  40         40
+         3 Mech                30         30
+
+SQL> create table adm_master (admno number, name varchar(10),ccd number);
+
+Table created.
+
+SQL> ed c:/oracle/trig23
+
+SQL> create view admview as select * from adm_master;
+
+View created.
+
+SQL> ed c:/oracle/trig23
+
+SQL> @ c:/oracle/trig23
+ 16  /
+
+Trigger created.
+
+SQL> insert into admview values(101,'A',1);
+Admission Granted !! Seats Updated
+
+1 row created.
+
+SQL> select * from course_master;
+
+       CCD CNAME      TOTAL_SEATS  REM_SEATS
+---------- ---------- ----------- ----------
+         1 CS                  60         59
+         2 AI                  40         40
+         3 Mech                30         30
+
+SQL> insert into admview values(102,'A',1);
+Admission Granted !! Seats Updated
+
+1 row created.
+
+SQL> insert into admview values(103,'A',2);
+Admission Granted !! Seats Updated
+
+1 row created.
+
+SQL> select * from course_master;
+
+       CCD CNAME      TOTAL_SEATS  REM_SEATS
+---------- ---------- ----------- ----------
+         1 CS                  60         58
+         2 AI                  40         39
+         3 Mech                30         30
+
+SQL> update course_master set rem_seats=1 where ccd=1;
+
+1 row updated.
+
+SQL> select * from course_master;
+
+       CCD CNAME      TOTAL_SEATS  REM_SEATS
+---------- ---------- ----------- ----------
+         1 CS                  60          1
+         2 AI                  40         39
+         3 Mech                30         30
+
+SQL> insert into admview values(103,'A',1);
+Admission Granted !! Seats Updated
+
+1 row created.
+
+SQL> select * from course_master;
+
+       CCD CNAME      TOTAL_SEATS  REM_SEATS
+---------- ---------- ----------- ----------
+         1 CS                  60          0
+         2 AI                  40         39
+         3 Mech                30         30
+
+SQL> insert into admview values(103,'A',1);
+No seats left
+
+1 row created.
+
+SQL> select * from course_master;
+
+       CCD CNAME      TOTAL_SEATS  REM_SEATS
+---------- ---------- ----------- ----------
+         1 CS                  60          0
+         2 AI                  40         39
+         3 Mech                30         30
+
+SQL> select * from adm_master;
+
+     ADMNO NAME              CCD
+---------- ---------- ----------
+       101 A                   1
+       102 A                   1
+       103 A                   2
+       103 A                   1
+
+SQL> insert into admview values(103,'A',1);
+No seats left
+
+1 row created.
+
+SQL> select * from adm_master;
+
+     ADMNO NAME              CCD
+---------- ---------- ----------
+       101 A                   1
+       102 A                   1
+       103 A                   2
+       103 A                   1
+
+SQL> set feedback off;
+SQL> insert into admview values(103,'A',1);
+No seats left
+SQL> @ c:/oracle/trig23
+ 16  /
+SQL> ed c:/oracle/trig23
+
+SQL> create table loan_master
+  2  (acno number, name varchar(10), loan_amt number,balance number);
+SQL> set feedback on;
+SQL> insert into loan_master values
+  2  (1,'A',50000,50000);
+
+1 row created.
+
+SQL> insert into loan_master values
+  2  (2,'B',60000,60000);
+
+1 row created.
+
+SQL> insert into loan_master values
+  2  (3,'C',90000,90000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      50000
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> create table installments(acno number,amt number);
+
+Table created.
+
+SQL> ed c:/oracle/trig24
+
+SQL> ed c:/oracle/trig24
+
+SQL> @ c:/oracle/trig24
+create or replace trigger trig24 instead of insview for each row
+                                            *
+ERROR at line 1:
+ORA-04072: invalid trigger type
+
+
+SQL> create view insview as select * from installments;
+
+View created.
+
+SQL> @ c:/oracle/trig24
+create or replace trigger trig24 instead of insview for each row
+                                            *
+ERROR at line 1:
+ORA-04072: invalid trigger type
+
+
+SQL> ed c:/oracle/trig24
+
+SQL> @ c:/oracle/trig24
+
+Trigger created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      50000
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> insert into insview values(2,5000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      50000
+         2 B               60000      55000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+no rows selected
+
+SQL>
+SQL> ed c:/oracle/trig24
+
+SQL> @ c:/oracle/trig24
+
+Trigger created.
+
+SQL> insert into insview values(2,5000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      50000
+         2 B               60000      50000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         2       5000
+
+1 row selected.
+
+SQL> insert into insview values(2,50000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      50000
+         2 B               60000          0
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         2       5000
+         2      50000
+
+2 rows selected.
+
+SQL> insert into insview values(2,5000);
+
+1 row created.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         2       5000
+         2      50000
+
+2 rows selected.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      50000
+         2 B               60000          0
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> insert into insview values(1,55000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      -5000
+         2 B               60000          0
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         2       5000
+         2      50000
+         1      55000
+
+3 rows selected.
+
+SQL> ed c:/oracle/trig24
+
+SQL> @ c:/oracle/trig24
+
+Trigger created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      -5000
+         2 B               60000          0
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         2       5000
+         2      50000
+         1      55000
+
+3 rows selected.
+
+SQL> update loan_master set balance=50000 where acno=1;
+
+1 row updated.
+
+SQL> update loan_master set balance=60000 where acno=2;
+
+1 row updated.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      50000
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> truncate table installments;
+
+Table truncated.
+
+SQL> insert into insview values(1,2000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      48000
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> truncate table installments;
+
+Table truncated.
+
+SQL> update loan_master set balance=60000 where acno=2;
+
+1 row updated.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      48000
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> insert into insview values(1,5000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000      43000
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         1       5000
+
+1 row selected.
+
+SQL> insert into insview values(1,43000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000          0
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         1       5000
+         1      43000
+
+2 rows selected.
+
+SQL> insert into insview values(1,5000);
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000          0
+         2 B               60000      60000
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         1       5000
+         1      43000
+
+2 rows selected.
+
+SQL> insert into insview values(2,70000);
+Excess amount 10000 returned
+
+1 row created.
+
+SQL> select * from loan_master;
+
+      ACNO NAME         LOAN_AMT    BALANCE
+---------- ---------- ---------- ----------
+         1 A               50000          0
+         2 B               60000          0
+         3 C               90000      90000
+
+3 rows selected.
+
+SQL> select * from installments;
+
+      ACNO        AMT
+---------- ----------
+         1       5000
+         1      43000
+         2      60000
+
+3 rows selected.
+
+SQL> ed c:/oracle/trig24
+
+SQL> note

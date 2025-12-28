@@ -1,0 +1,720 @@
+
+SQL*Plus: Release 10.2.0.1.0 - Production on Tue Dec 23 08:37:51 2025
+
+Copyright (c) 1982, 2005, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: prince
+Enter password:
+Connected.
+SQL> ed c:/oracle/trig1.sql
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> select * from ta;
+select * from ta
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ESTUDENTS                      TABLE
+ATTENDANCE                     TABLE
+DEPT                           TABLE
+EMPL                           TABLE
+STUDENT                        TABLE
+DOCTORS                        TABLE
+PATIENTS                       TABLE
+DEVELOPERS                     TABLE
+SQUARES                        TABLE
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+ACCOUNTS                       TABLE
+EMP                            TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+MARKSHEET                      TABLE
+BILL                           TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+EMPS                           TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+STOCK                          TABLE
+SALES                          TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+RES2                           TABLE
+FOOTBALL                       TABLE
+
+46 rows selected.
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> ed c:/oracle/trig1.sql
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> @ c:/oracle/trig10.sql
+
+Trigger created.
+
+SQL> select * from football;
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         2 Germany             9          6
+         3 Brazil             12          8
+         4 Spain               3         10
+         5 Italy               8         12
+         6 Japan               2          9
+
+6 rows selected.
+
+SQL> set serveroutput on
+SQL> insert into football values(7,'China',1,2);
+New Record Added. Thank You
+
+1 row created.
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> insert into football values(8,'Aa',1,2);
+New Record Added. Thank You
+
+1 row created.
+
+SQL> create table football2 as select * from football;
+
+Table created.
+
+SQL> select * from football2;
+
+       TCD TNAME          SCORED    AGAINST
+---------- ---------- ---------- ----------
+         1 India              10          4
+         2 Germany             9          6
+         3 Brazil             12          8
+         4 Spain               3         10
+         5 Italy               8         12
+         6 Japan               2          9
+         7 China               1          2
+         8 Aa                  1          2
+
+8 rows selected.
+
+SQL> insert into football (select * from football2);
+New Record Added. Thank You
+New Record Added. Thank You
+New Record Added. Thank You
+New Record Added. Thank You
+New Record Added. Thank You
+New Record Added. Thank You
+New Record Added. Thank You
+New Record Added. Thank You
+
+8 rows created.
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> @ c:/oracle/trig10.sql
+
+Trigger created.
+
+SQL> insert into football (select * from football2);
+New Record Added. Thank You
+
+8 rows created.
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> @ c:/oracle/trig10.sql
+create or replace trigger trig10 before insert on football
+                          *
+ERROR at line 1:
+ORA-04082: NEW or OLD references not allowed in table level triggers
+
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> @ c:/oracle/trig10.sql
+
+Trigger created.
+
+SQL> insert into football values(9,'X',3,4);
+X
+New Record Added. Thank You
+
+1 row created.
+
+SQL> ed c:/oracle/trig10.sql
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ESTUDENTS                      TABLE
+ATTENDANCE                     TABLE
+DEPT                           TABLE
+EMPL                           TABLE
+STUDENT                        TABLE
+DOCTORS                        TABLE
+PATIENTS                       TABLE
+DEVELOPERS                     TABLE
+SQUARES                        TABLE
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+ACCOUNTS                       TABLE
+EMP                            TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+MARKSHEET                      TABLE
+BILL                           TABLE
+FOOTBALL2                      TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+ISSUE                          TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+EMPS                           TABLE
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+STOCK                          TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+SALES                          TABLE
+RES2                           TABLE
+FOOTBALL                       TABLE
+
+47 rows selected.
+
+SQL> select * from cities;
+
+no rows selected
+
+SQL> desc cities;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(10)
+
+SQL> select * from stock;
+
+    PRODCD NAME       COMPANY
+---------- ---------- ----------
+       101 Monitor    Samsung
+       102 Printer    Epson
+       103 Mouse      Logitech
+       104 Processor  AMD
+       105 Scanner    HP
+
+SQL> ed c:/oracle/trig11.sql
+
+SQL> @ c:/oracle/trig11.sql
+
+Trigger created.
+
+SQL> insert into stock values(106,'Laptop',null);
+
+1 row created.
+
+SQL> select * from stock;
+
+    PRODCD NAME       COMPANY
+---------- ---------- ----------
+       101 Monitor    Samsung
+       102 Printer    Epson
+       103 Mouse      Logitech
+       104 Processor  AMD
+       105 Scanner    HP
+       106 Laptop     Lenovo
+
+6 rows selected.
+
+SQL> ed c:/oracle/trig11.sql
+
+SQL> select * from sales;
+
+       PNO CNAME
+---------- ----------
+       101 A
+       104 D
+
+SQL> select * from marks;
+select * from marks
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from marksheet;
+
+    ROLLNO         M1         M2         M3      TOTAL         AV
+---------- ---------- ---------- ---------- ---------- ----------
+       101         60         70         80        210 156.666667
+       102         40         50         60        150        110
+       103         60         70         80        210         70
+
+SQL> select * from products;
+
+       PNO      PRICE
+---------- ----------
+         1      10000
+         1   10000.54
+
+SQL> ed c:/oracle/trig12.sql
+
+SQL> select abs(-20) from dual;
+
+  ABS(-20)
+----------
+        20
+
+SQL> ed c:/oracle/trig12.sql
+
+SQL>
+SQL> ed c:/oracle/trig12.sql
+
+SQL> @ c:/oracle/trig12.sql
+
+Warning: Trigger created with compilation errors.
+
+SQL> show err
+Errors for TRIGGER TRIG12:
+
+LINE/COL ERROR
+-------- -----------------------------------------------------------------
+2/17     PLS-00103: Encountered the symbol ":" when expecting one of the
+         following:
+         * & - + / at mod remainder rem then <an exponent (**)> and or
+         || multiset
+         The symbol "then was inserted before ":" to continue.
+
+SQL> ed c:/oracle/trig12.sql
+
+SQL> @ c:/oracle/trig12.sql
+
+Trigger created.
+
+SQL> insert into products values(2,-100);
+
+1 row created.
+
+SQL> select * from products;
+
+       PNO      PRICE
+---------- ----------
+         1      10000
+         1   10000.54
+         2        100
+
+SQL> ed c:/oracle/trig11.sql
+
+SQL> create table products2 as select * from products;
+create table products2 as select * from products
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> create table products3 as select * from products;
+
+Table created.
+
+SQL> ed c:/oracle/trig11.sql
+
+SQL> @ c:/oracle/trig11.sql
+create or replace trigger trigg11 after insert on stock for each row
+                          *
+ERROR at line 1:
+ORA-04084: cannot change NEW values for this trigger type
+
+
+SQL> ed c:/oracle/trig11.sql
+
+SQL> ed c:/oracle/trig13.sql
+
+SQL> @ c:/oracle/trig13.sql
+
+Trigger created.
+
+SQL> insert into products values(9,400);
+
+1 row created.
+
+SQL> select * from products3;
+
+       PNO      PRICE
+---------- ----------
+         1      10000
+         1   10000.54
+         2        100
+         9        400
+
+SQL> ed c:/oracle/trig13.sql
+
+SQL> ed c:/oracle/trig14.sql
+
+SQL> @ c:/oracle/trig14.sql
+
+Trigger created.
+
+SQL> delete from products where pno=1;
+1,,10000
+1,,10000.54
+
+2 rows deleted.
+
+SQL> ed c:/oracle/trig14.sql
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ESTUDENTS                      TABLE
+ATTENDANCE                     TABLE
+DEPT                           TABLE
+EMPL                           TABLE
+STUDENT                        TABLE
+DOCTORS                        TABLE
+PATIENTS                       TABLE
+DEVELOPERS                     TABLE
+SQUARES                        TABLE
+EMPLOYEES                      TABLE
+CUSTOMERS3                     TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+CUSTOMERS                      TABLE
+CUSTOMERS2                     TABLE
+CUSTOMERS4                     TABLE
+CUSTOMERS5                     TABLE
+CUSTOMERS6                     TABLE
+CUSTOMERS7                     TABLE
+CUST10                         TABLE
+PRODUCTS                       TABLE
+PRODUCTS2                      TABLE
+ACCOUNTS                       TABLE
+EMP                            TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+MARKSHEET                      TABLE
+BILL                           TABLE
+FOOTBALL2                      TABLE
+PRODUCTS3                      TABLE
+TRAINS                         TABLE
+CRICKETERS                     TABLE
+RESERVATION                    TABLE
+WORKERS                        TABLE
+SALARY                         TABLE
+MEMBERS                        TABLE
+BOOKS                          TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ISSUE                          TABLE
+EMPS                           TABLE
+TEST                           TABLE
+EXAM                           TABLE
+SAMPLE                         TABLE
+EMP1                           TABLE
+SAMPLE2                        TABLE
+PARENT                         TABLE
+CHILD                          TABLE
+EMP2                           TABLE
+CITIES                         TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+STOCK                          TABLE
+SALES                          TABLE
+RES2                           TABLE
+FOOTBALL                       TABLE
+
+48 rows selected.
+
+SQL> select * from exam;
+
+     ADMNO     ROLLNO         M1
+---------- ---------- ----------
+         1        101         56
+         2        101         56
+         1        102         56
+         1        101         56
+
+SQL> ed c:/oracle/trig15.sql
+
+SQL> @ c:/oracle/trig15.sql
+
+Trigger created.
+
+SQL> update exam set rollno=103 where admno=2;
+Exam table updated
+
+1 row updated.
+
+SQL> update exam set m1=10 where admno=2;
+Exam table updated
+
+1 row updated.
+
+SQL> ed c:/oracle/trig15.sql
+
+SQL> ed c:/oracle/trig16.sql
+
+SQL> @ c:/oracle/trig16.sql
+
+Trigger created.
+
+SQL> update exam set rollno=101 where admno=2;
+Exam table updated
+
+1 row updated.
+
+SQL> update exam set m1=10 where admno=2;
+Col M1 updated
+Exam table updated
+
+1 row updated.
+
+SQL> ed c:/oracle/trig16.sql
+
+SQL> ed c:/oracle/trig17.sql
+
+SQL> @ c:/oracle/trig17.sql
+
+Trigger created.
+
+SQL> select * from exam;
+
+     ADMNO     ROLLNO         M1
+---------- ---------- ----------
+         1        101         56
+         2        101         10
+         1        102         56
+         1        101         56
+
+SQL> update exam set m1=70 where rollno=101;
+Col M1 updated
+Exam table updated
+Col M1 updated
+Exam table updated
+Col M1 updated
+Exam table updated
+
+3 rows updated.
+
+SQL> update exam set m1=700 where rollno=101;
+Marks can not be more than 100
+Col M1 updated
+Exam table updated
+Marks can not be more than 100
+Col M1 updated
+Exam table updated
+Marks can not be more than 100
+Col M1 updated
+Exam table updated
+
+3 rows updated.
+
+SQL> ed c:/oracle/trig17.sql
+
+SQL> select * from exam;
+
+     ADMNO     ROLLNO         M1
+---------- ---------- ----------
+         1        101        700
+         2        101        700
+         1        102         56
+         1        101        700
+
+SQL> ed c:/oracle/trig17.sql
+
+SQL> select * from empl;
+
+     EMPID EMPNAME        DEPTID     SALARY
+---------- ---------- ---------- ----------
+       101 A                  10      30000
+       102 B                  10      60000
+       103 C                  20      20000
+       104 D                  30      15000
+       105 E                  10       5000
+
+SQL> create table emp10 as select * from emp1;
+
+Table created.
+
+SQL> ed c:/oracle/trig18.sql
+
+SQL> @ c:/oracle/trig18.sql
+when(new.sal<old.sal)
+             *
+ERROR at line 2:
+ORA-00904: "SAL": invalid identifier
+
+
+SQL> ed c:/oracle/trig18.sql
+
+SQL> @ c:/oracle/trig18.sql
+
+Trigger created.
+
+SQL> select * from emp10;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+
+SQL> update emp10 set salary=6000 where empno=1;
+
+1 row updated.
+
+SQL> select * from emp1;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                5000
+
+SQL> select * from emp10;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                6000
+
+SQL> update emp10 set salary=2000 where empno=1;
+Salary can not be decreased
+
+1 row updated.
+
+SQL> select * from emp10;
+
+     EMPNO NAME           SALARY
+---------- ---------- ----------
+         1 A                2000
+
+SQL> ed c:/oracle/trig18.sql
+
+SQL> @ c:/oracle/trig18.sql
+
+Warning: Trigger created with compilation errors.
+
+SQL> ed c:/oracle/trig18.sql
+
+SQL> @ c:/oracle/trig18.sql
+
+Trigger created.
+
+SQL> update emp10 set salary=2000 where empno=1;
+
+1 row updated.
+
+SQL> update emp10 set salary=1000 where empno=1;
+update emp10 set salary=1000 where empno=1
+           *
+ERROR at line 1:
+ORA-21000: error number argument to raise_application_error of 20001 is out of
+range
+ORA-06512: at "PRINCE.TRIG18", line 3
+ORA-04088: error during execution of trigger 'PRINCE.TRIG18'
+
+
+SQL> ed c:/oracle/trig18.sql
+
+SQL> @ c:/oracle/trig18.sql
+
+Trigger created.
+
+SQL> update emp10 set salary=200 where empno=1;
+update emp10 set salary=200 where empno=1
+           *
+ERROR at line 1:
+ORA-20001: Can not be decreased
+ORA-06512: at "PRINCE.TRIG18", line 3
+ORA-04088: error during execution of trigger 'PRINCE.TRIG18'
+
+
+SQL> ed c:/oracle/trig18.sql
+
+SQL> ed c:/oracle/trig18.sql
+
+SQL> @ c:/oracle/trig14.sql
+
+Trigger created.
+
+SQL> ed c:/oracle/trig14.sql
+
+SQL> ed c:/oracle/trig15.sql
+
+SQL> ed c:/oracle/trig13.sql
+
+SQL> ed c:/oracle/trig7.sql
+
+SQL> ed c:/oracle/trig10.sql
